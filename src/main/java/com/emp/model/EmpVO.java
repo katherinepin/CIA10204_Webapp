@@ -6,38 +6,18 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "employee")
+
 public class EmpVO implements java.io.Serializable{
-	@Id
-	@Column(name = "emp_id", updatable = false)
+
 	private Integer empId;
-	
-	@Column(name = "emp_name")
 	private String empName;
-	
-	@Column(name = "emp_account")
 	private String empAccount;
-	
-	@Column(name = "emp_password")
 	private String empPassword;
-	
-	@Column(name = "emp_phone")
 	private String empPhone;
-	
-	@Column(name = "emp_address")
 	private String empAddress;
-	
-	@Column(name = "emp_email")
 	private String empEmail;
-	
-	@Column(name = "emp_hiredate")
 	private Date empHiredate;
-	
-	@Column(name = "emp_status")
 	private Byte empStatus;
-	
-	@Column(name = "emp_photo")
 	private byte[] empPhoto;
 	
 	

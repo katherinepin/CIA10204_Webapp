@@ -5,7 +5,7 @@
 <% //見com.emp.controller.EmpServlet.java第238行存入req的empVO物件 (此為輸入格式有錯誤時的empVO物件)
    EmpVO empVO = (EmpVO) request.getAttribute("empVO");
 %>
---<%= empVO==null %>--${empVO.deptno}-- <!-- line 100 -->
+
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>

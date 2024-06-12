@@ -98,7 +98,7 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 			pstmt.setDate(7, empVO.getEmpHiredate());
 			pstmt.setByte(8, empVO.getEmpStatus());
 //			pstmt.setBytes(9, empVO.getEmpPhoto());
-			pstmt.setInt(10, empVO.getEmpId());
+			pstmt.setInt(9, empVO.getEmpId());
 			
 
 
