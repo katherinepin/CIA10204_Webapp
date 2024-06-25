@@ -11,6 +11,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
@@ -170,17 +171,9 @@ empHiredate = java.sql.Date.valueOf(req.getParameter("empHiredate").trim());
 				
 				
 Byte empStatus = Byte.valueOf(req.getParameter("empStatus").trim());
-				
-//InputStream in = req.getPart("empPhoto").getInputStream(); //從javax.servlet.http.Part物件取得上傳檔案的InputStream
-//				byte[]  empPhoto= null;
-//				if(in.available()!=0){
-//					empPhoto = new byte[in.available()];
-//					in.read(empPhoto);
-//					in.close();
-//				}  else {
-//					EmpService empSvc = new EmpService();
-//					empPhoto = empSvc.getOneEmp(empId).getEmpPhoto();
-//				}
+
+
+
 
 
 					EmpVO empVO = new EmpVO();
@@ -193,7 +186,7 @@ Byte empStatus = Byte.valueOf(req.getParameter("empStatus").trim());
 					empVO.setEmpEmail(empEmail);
 					empVO.setEmpHiredate(empHiredate);
 					empVO.setEmpStatus(empStatus);
-//					empVO.setEmpPhoto(empPhoto);
+
 					
 					
 
@@ -286,13 +279,14 @@ empHiredate = java.sql.Date.valueOf(req.getParameter("empHiredate").trim());
 //Byte empStatus = Byte.valueOf(req.getParameter("empStatus").trim());
 
 
-//InputStream in = req.getPart("emp_photo").getInputStream(); //從javax.servlet.http.Part物件取得上傳檔案的InputStream
-//				byte[] empPhoto= null;
-//				if(in.available()!=0){
-//					empPhoto = new byte[in.available()];
-//					in.read(empPhoto);
-//					in.close();
-//				}  else errorMsgs.add("員工照片: 請上傳照片");
+Part empPhotoPart = req.getPart("empPhoto");
+				InputStream empPhotoInputStream = empPhotoPart.getInputStream();
+				byte[] empPhoto = null;
+				if (empPhotoInputStream.available() != 0) {
+				    empPhoto = new byte[empPhotoInputStream.available()];
+				    empPhotoInputStream.read(empPhoto);
+				    empPhotoInputStream.close();
+				}
 				
 
 				EmpVO empVO = new EmpVO();
@@ -304,9 +298,6 @@ empHiredate = java.sql.Date.valueOf(req.getParameter("empHiredate").trim());
 				empVO.setEmpAddress(empAddress);
 				empVO.setEmpEmail(empEmail);
 				empVO.setEmpHiredate(empHiredate);
-//				empVO.setEmpStatus(empStatus);
-
-//				empVO.setEmpPhoto(empPhoto);
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {

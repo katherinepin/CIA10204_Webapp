@@ -1,15 +1,15 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.emp.model.*"%>
 
-<% //¨£com.emp.controller.EmpServlet.java²Ä238¦æ¦s¤JreqªºempVOª«¥ó (¦¹¬°¿é¤J®æ¦¡¦³¿ù»~®ÉªºempVOª«¥ó)
+<% //è¦‹com.emp.controller.EmpServlet.javaç¬¬238è¡Œå­˜å…¥reqçš„empVOç‰©ä»¶ (æ­¤ç‚ºè¼¸å…¥æ ¼å¼æœ‰éŒ¯èª¤æ™‚çš„empVOç‰©ä»¶)
    EmpVO empVO = (EmpVO) request.getAttribute("empVO");
 %>
 
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>­û¤u¸ê®Æ·s¼W - addEmp.jsp</title>
+<title>å“¡å·¥è³‡æ–™æ–°å¢ - addEmp.jsp</title>
 
 <style>
   table#table-1 {
@@ -48,16 +48,16 @@
 
 <table id="table-1">
 	<tr><td>
-		 <h3>­û¤u¸ê®Æ·s¼W - addEmp.jsp</h3></td><td>
-		 <h4><a href="select_page.jsp"><img src="images/tomcat.png" width="100" height="100" border="0">¦^­º­¶</a></h4>
+		 <h3>å“¡å·¥è³‡æ–™æ–°å¢ - addEmp.jsp</h3></td><td>
+		 <h4><a href="select_page.jsp"><img src="images/tomcat.png" width="100" height="100" border="0">å›é¦–é </a></h4>
 	</td></tr>
 </table>
 
-<h3>¸ê®Æ·s¼W:</h3>
+<h3>è³‡æ–™æ–°å¢:</h3>
 
-<%-- ¿ù»~ªí¦C --%>
+<%-- éŒ¯èª¤è¡¨åˆ— --%>
 <c:if test="${not empty errorMsgs}">
-	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+	<font style="color:red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 	<ul>
 		<c:forEach var="message" items="${errorMsgs}">
 			<li style="color:red">${message}</li>
@@ -72,34 +72,34 @@
 	
 	
 	<tr>
-		<td>­û¤u©m¦W:</td>
-		<td><input type="TEXT" name="empName" value="<%= (empVO==null)? "kathy4" : empVO.getEmpName()%>" size="45"/></td>  <%-- empVO.getEname()¼´¤wkeyªº­È --%>
+		<td>å“¡å·¥å§“å:</td>
+		<td><input type="TEXT" name="empName" value="<%= (empVO==null)? "kathy4" : empVO.getEmpName()%>" size="45"/></td>  <%-- empVO.getEname()æ’ˆå·²keyçš„å€¼ --%>
 	</tr>
 	<tr>
-		<td>±b¸¹:</td>
+		<td>å¸³è™Ÿ:</td>
 		<td><input type="TEXT" name="empAccount"   value="<%= (empVO==null)? "Kathy4" : empVO.getEmpAccount()%>" size="45"/></td>
 	</tr>
 	<tr>
-		<td>±K½X:</td>
+		<td>å¯†ç¢¼:</td>
 		<td><input type="TEXT" name="empPassword"   value="<%= (empVO==null)? "123456" : empVO.getEmpPassword()%>" size="45"/></td>
 	</tr>
 	<tr>
-		<td>¤â¾÷:</td>
+		<td>æ‰‹æ©Ÿ:</td>
 		<td><input type="TEXT" name="empPhone"   value="<%= (empVO==null)? "0912345678" : empVO.getEmpPhone()%>" size="45"/></td>
 	</tr>
 
 	<tr>
-		<td>¦a§}:</td>
-		<td><input type="TEXT" name="empAddress"   value="<%= (empVO==null)? "¥x¤¤¥«" : empVO.getEmpAddress()%>" size="45"/></td>
+		<td>åœ°å€:</td>
+		<td><input type="TEXT" name="empAddress"   value="<%= (empVO==null)? "å°ä¸­å¸‚" : empVO.getEmpAddress()%>" size="45"/></td>
 	</tr>
 
 	<tr>
-		<td>¹q¤l¶l¥ó:</td>
+		<td>é›»å­éƒµä»¶:</td>
 		<td><input type="TEXT" name="empEmail"   value="<%= (empVO==null)? "aaa@aaa.com" : empVO.getEmpEmail()%>" size="45"/></td>
 	</tr>
 	
 	<tr>
-		<td>¶±¥Î¤é´Á:</td>
+		<td>é›‡ç”¨æ—¥æœŸ:</td>
 		<td><input name="empHiredate" id="f_date1" type="text" ></td>
 	</tr>
 
@@ -107,13 +107,13 @@
 
 <br>
 <input type="hidden" name="action" value="insert">
-<input type="submit" value="°e¥X·s¼W"></FORM>
+<input type="submit" value="é€å‡ºæ–°å¢"></FORM>
 
 </body>
 
 
 
-<!-- =========================================¥H¤U¬° datetimepicker ¤§¬ÛÃö³]©w========================================== -->
+<!-- =========================================ä»¥ä¸‹ç‚º datetimepicker ä¹‹ç›¸é—œè¨­å®š========================================== -->
 
 <% 
   java.sql.Date hiredate = null;
@@ -141,20 +141,20 @@
         $('#f_date1').datetimepicker({
 	       theme: '',              //theme: 'dark',
 	       timepicker:false,       //timepicker:true,
-	       step: 1,                //step: 60 (³o¬Otimepickerªº¹w³]¶¡¹j60¤ÀÄÁ)
+	       step: 1,                //step: 60 (é€™æ˜¯timepickerçš„é è¨­é–“éš”60åˆ†é˜)
 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
 		   value: '<%=hiredate%>', // value:   new Date(),
-           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // ¥h°£¯S©w¤£§t
-           //startDate:	            '2017/07/10',  // °_©l¤é
-           //minDate:               '-1970-01-01', // ¥h°£¤µ¤é(¤£§t)¤§«e
-           //maxDate:               '+1970-01-01'  // ¥h°£¤µ¤é(¤£§t)¤§«á
+           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // å»é™¤ç‰¹å®šä¸å«
+           //startDate:	            '2017/07/10',  // èµ·å§‹æ—¥
+           //minDate:               '-1970-01-01', // å»é™¤ä»Šæ—¥(ä¸å«)ä¹‹å‰
+           //maxDate:               '+1970-01-01'  // å»é™¤ä»Šæ—¥(ä¸å«)ä¹‹å¾Œ
         });
         
         
    
-        // ----------------------------------------------------------¥H¤U¥Î¨Ó±Æ©wµLªk¿ï¾Üªº¤é´Á-----------------------------------------------------------
+        // ----------------------------------------------------------ä»¥ä¸‹ç”¨ä¾†æ’å®šç„¡æ³•é¸æ“‡çš„æ—¥æœŸ-----------------------------------------------------------
 
-        //      1.¥H¤U¬°¬Y¤@¤Ñ¤§«eªº¤é´ÁµLªk¿ï¾Ü
+        //      1.ä»¥ä¸‹ç‚ºæŸä¸€å¤©ä¹‹å‰çš„æ—¥æœŸç„¡æ³•é¸æ“‡
         //      var somedate1 = new Date('2017-06-15');
         //      $('#f_date1').datetimepicker({
         //          beforeShowDay: function(date) {
@@ -168,7 +168,7 @@
         //      }});
 
         
-        //      2.¥H¤U¬°¬Y¤@¤Ñ¤§«áªº¤é´ÁµLªk¿ï¾Ü
+        //      2.ä»¥ä¸‹ç‚ºæŸä¸€å¤©ä¹‹å¾Œçš„æ—¥æœŸç„¡æ³•é¸æ“‡
         //      var somedate2 = new Date('2017-06-15');
         //      $('#f_date1').datetimepicker({
         //          beforeShowDay: function(date) {
@@ -182,7 +182,7 @@
         //      }});
 
 
-        //      3.¥H¤U¬°¨â­Ó¤é´Á¤§¥~ªº¤é´ÁµLªk¿ï¾Ü (¤]¥i«ö»İ­n´«¦¨¨ä¥L¤é´Á)
+        //      3.ä»¥ä¸‹ç‚ºå…©å€‹æ—¥æœŸä¹‹å¤–çš„æ—¥æœŸç„¡æ³•é¸æ“‡ (ä¹Ÿå¯æŒ‰éœ€è¦æ›æˆå…¶ä»–æ—¥æœŸ)
         //      var somedate1 = new Date('2017-06-15');
         //      var somedate2 = new Date('2017-06-25');
         //      $('#f_date1').datetimepicker({

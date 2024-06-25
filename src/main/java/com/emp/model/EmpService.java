@@ -1,19 +1,65 @@
 package com.emp.model;
 
+import java.sql.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.assign.model.AssignVO;
+@Service("empService")
 public class EmpService {
 
-	private EmpDAO_interface dao;
+	@Autowired
+	EmpRepository repository;
+	
+	@Autowired
+    private SessionFactory sessionFactory;
+	
+//	private EmpDAO_interface dao;
+//
+//	public EmpService() {
+//		dao = new EmpDAO();
+//	}
 
-	public EmpService() {
-		dao = new EmpDAO();
+
+	public void addEmp(EmpVO empVO) {
+		repository.save(empVO);
+	}
+
+	public void updateEmp(EmpVO empVO) {
+		repository.save(empVO);
+	}
+
+	public void deleteEmp(Integer empId) {
+		if (repository.existsById(empId))
+			repository.deleteByEmpId(empId);
+//		    repository.deleteById(empno);
+	}
+
+	public EmpVO getOneEmp(Integer empId) {
+		Optional<EmpVO> optional = repository.findById(empId);
+//		return optional.get();
+		return optional.orElse(null);  // public T orElse(T other) : 如果值存在就回傳其值，否則回傳other的值
+	}
+
+	public List<EmpVO> getAll() {
+		return repository.findAll();
+	}
+	
+	public Set<AssignVO> getAssignsByEmpId(Integer empId) {
+		return getOneEmp(empId).getAssigns();
 	}
 
 
-	public EmpVO addEmp(String empName, String empAccount, String empPassword, String empPhone,
-			String empAddress, String empEmail, java.sql.Date empHiredate) {
-		
+
+
+	public EmpVO addEmp(String empName, String empAccount, String empPassword, String empPhone, String empAddress,
+			String empEmail, Date empHiredate) {
 		EmpVO empVO = new EmpVO();
 
 		empVO.setEmpName(empName);
@@ -23,16 +69,16 @@ public class EmpService {
 		empVO.setEmpAddress(empAddress);
 		empVO.setEmpEmail(empEmail);
 		empVO.setEmpHiredate(empHiredate);
-//		empVO.setEmpStatus(empStatus);
-//		empVO.setEmpPhoto(empPhoto);
+
 		
-		dao.insert(empVO);
+//		dao.insert(empVO);
 
 		return empVO;
 	}
-	
+
+
 	public EmpVO updateEmp(Integer empId, String empName, String empAccount, String empPassword, String empPhone,
-			String empAddress, String empEmail, java.sql.Date empHiredate,Byte empStatus) {
+			String empAddress, String empEmail, Date empHiredate, Byte empStatus) {
 		EmpVO empVO = new EmpVO();
 
 		empVO.setEmpId(empId);
@@ -44,23 +90,14 @@ public class EmpService {
 		empVO.setEmpEmail(empEmail);
 		empVO.setEmpHiredate(empHiredate);
 		empVO.setEmpStatus(empStatus);
-//		empVO.setEmpPhoto(empPhoto);
-		dao.update(empVO);
+//		dao.update(empVO);
 
 		return empVO;
 	}
 
-	public void deleteEmp(Integer empId) {
-		dao.delete(empId);
-	}
-
-	public EmpVO getOneEmp(Integer empId) {
-		return dao.findByPrimaryKey(empId);
-	}
-
-	public List<EmpVO> getAll() {
-
-		return dao.getAll();
-	}
-
+//	public List<EmpVO> getAll(Map<String, String[]> map) {
+//		return HibernateUtil_CompositeQuery_Emp3.getAllC(map,sessionFactory.openSession());
+//	}
 }
+	
+

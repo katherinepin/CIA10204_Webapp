@@ -70,7 +70,6 @@
 		<th>電子郵件</th>
 		<th>到職日期</th>
 	 	<th>員工狀態</th> 
-<%--	<th>大頭照</th>  --%>
 	</tr>
 	<%@ include file="page1.file" %> 
 	<c:forEach var="empVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
@@ -85,7 +84,7 @@
 			<td>${empVO.empEmail}</td>
 			<td>${empVO.empHiredate}</td>
 		    <td>${empVO.empStatus == 0 ? "在職" : "離職" } </td>
-<%-- 		<td>${empVO.empPhoto}</td>  --%>
+		    
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">

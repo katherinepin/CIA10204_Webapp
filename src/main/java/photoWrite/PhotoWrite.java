@@ -9,13 +9,13 @@ class PhotoWrite {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		InputStream fin = null;
-		String url = "jdbc:mysql://localhost:3306/morningcode_04?serverTimezone=Asia/Taipei";
+		String url = "jdbc:mysql://localhost:3306/morningcode04?serverTimezone=Asia/Taipei";
 		String userid = "root";
 		String passwd = "123123dd";
 		String photos = "src/main/webapp/resources/DB_photos1"; //測試用圖片已置於【專案錄徑】底下的【resources/DB_photos1】目錄內
-		String update = "update employee set empPicture =? where empId=?";
+		String update = "update employee set emp_photo =? where emp_id=?";
 
-		int count = 7001;
+		int count = 1;
 		try {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(update);
