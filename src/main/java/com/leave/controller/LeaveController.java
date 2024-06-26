@@ -93,8 +93,12 @@ public class LeaveController {
 		if (result.hasErrors()) {
 			return "back-end/leave/update_leave_input";
 		}
+	    if (leaveVO.getLeaveStatus() == 1) {
+	        leaveVO.approveLeave();
+	    }
 //		/*************************** 2.開始修改資料 *****************************************/
 		leaveSvc.updateLeave(leaveVO);
+		
 
 //		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
 		model.addAttribute("success", "- (修改成功)");

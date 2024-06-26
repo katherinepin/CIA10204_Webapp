@@ -79,6 +79,16 @@
 				<option th:each="leaveAssigneeId : ${empListData}" th:value="${leaveAssigneeId.empId}" th:text="${leaveAssigneeId.empName}" />
 			</select>
 			</div>
+			
+			<div>
+				<label>核准狀態:</label>
+  				<select th:field="*{leaveStatus}">
+        		  <option th:if="${leaveVO.leaveStatus == 0}" value="0" selected>未審核</option>
+      			  <option th:if="${leaveVO.leaveStatus != 0}" value="0">未審核</option>
+				  <option th:if="${leaveVO.leaveStatus == 1}" value="1" selected>審核通過</option>
+				  <option th:if="${leaveVO.leaveStatus != 1}" value="1">審核通過</option>
+	        	</select>
+			</div>
 
 
 			

@@ -48,7 +48,7 @@ public class LeaveVO {
 	
 	public LeaveVO() {
         this.leaveFilingdate = new Timestamp(System.currentTimeMillis());
-        this.leaveApprovaldate = new Timestamp(System.currentTimeMillis());
+//        this.leaveApprovaldate = new Timestamp(System.currentTimeMillis());
     }
 
 	public Integer getLeaveId() {
@@ -108,6 +108,11 @@ public class LeaveVO {
 	public void setLeaveAssigneeId(EmpVO leaveAssigneeId) {
 		this.leaveAssigneeId = leaveAssigneeId;
 	}
+	
+	 public void approveLeave() {
+	        this.leaveApprovaldate = new Timestamp(System.currentTimeMillis());
+	        this.leaveStatus = 1; // Assuming 1 means approved
+	    }
 
 
 	
