@@ -14,7 +14,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>員工資料管理 - select_page.html</title>
 
-<head th:insert="~{/back-end/leave/included-fragment}"></head> <!-- 使用included-fragment.html網頁的全部 -->
+<head th:insert="~{/back-end/assign/included-fragment}"></head> <!-- 使用included-fragment.html網頁的全部 -->
 <style type="text/css">
 
 	button {
@@ -78,12 +78,12 @@
 	<div class="errorblock" th:utext="${errorMessage}">${errorMessage}</div><br>
 	<div class="a">
 	  <ul>
-		<li><h5><a href='listAllLeave'>List</a> all Assigns. <br><br></h5></li>
+		<li><h5><a href='listAllAssign'>List</a> all Assigns. <br><br></h5></li>
 
 		<li>
 			<form method="post" th:action="@{getOne_For_Display}">
 				輸入請假編號:
-				<input type="text" name="leaveId" th:value="${param.leaveId}" > 
+				<input type="text" name="assignId" th:value="${param.assignId}" > 
 				<input type="submit" value="送出">
 			</form><br>
 		</li>
@@ -138,14 +138,14 @@
 	
       <h4><span>排班管理</span></h4>
 	  <ul>
-		  <li><h5><a href='addLeave'>Add</a> a new Leave.</h5></li>
+		  <li><h5><a href='addAssign'>Add</a> a new Assign.</h5></li>
 	  </ul>
 	</div>
     
     <!-- 旗標getOne_For_Display見EmpnoController.java的第74行 -->
     <div class="b" th:if="${getOne_For_Display}">
         <!--使用listOneEmp.html網頁的listOneEmp-div片段--> <!-- 見listOneEmp.html的第35行的th:fragment="listOneEmp-div" --> <!-- 使用th:replace也可 -->
-        <div th:insert="~{/back-end/leave/listOnevLeave :: listOneLeave-div}"></div>
+        <div th:insert="~{/back-end/assign/listOneAssign :: listOneAssign-div}"></div>
     </div>
 
 </body>

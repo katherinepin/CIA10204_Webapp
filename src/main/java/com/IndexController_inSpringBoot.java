@@ -80,7 +80,7 @@ public class IndexController_inSpringBoot {
 		return "back-end/leave/select_page";
 	}
     
-    @GetMapping("/leave/listAllAssign")
+    @GetMapping("/leave/listAllLeave")
 	public String listAllLeave(Model model) {
 		return "back-end/leave/listAllLeave";
 	}
@@ -92,7 +92,16 @@ public class IndexController_inSpringBoot {
     	
 		return list;
 	}
+    //======================== emp畫面 =========================== 
+    @GetMapping("/emp/select_page")
+	public String select_page2(Model model) {
+		return "back-end/emp/select_page";
+	}
     
+    @GetMapping("/emp/listAllEmp")
+	public String listAllEmp(Model model) {
+		return "back-end/emp/listAllEmp";
+	}
     
     
 	@ModelAttribute("empListData") // for select_page.html 第135行用 empId用

@@ -12,9 +12,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>所有員工資料 - listAllLeave.html</title>
+<title>所有員工資料 - listAllAssign.html</title>
 
-<head th:insert="~{/back-end/leave/included-fragment}"></head>
+<head th:insert="~{/back-end/assign/included-fragment}"></head>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>                                    <!-- ●●js  for jquery datatables 用 -->
 <script	src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>              <!-- ●●js  for jquery datatables 用 -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css" /> <!-- ●●css for jquery datatables 用 -->
@@ -60,8 +60,8 @@ body {
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
-		 <div align="center"> <h2>所有員工資料 - listAllEmp.html</h2>
-		 <h3><a class="navbar-brand" th:href="@{/leave/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a></h3></div>
+		 <div align="center"> <h2>所有員工資料 - listAllAssign.html</h2>
+		 <h3><a class="navbar-brand" th:href="@{/assign/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a></h3></div>
 </nav>
 
 <table id="example" class="display" style="width: 100%">
@@ -77,12 +77,12 @@ body {
   </thead>
 	
   <tbody>
-		<th:block th:each="leaveVO : ${leaveListData}">
+		<th:block th:each="assignVO : ${assignListData}">
 			<tr>
 
-				<td th:text="${leaveVO.leaveId}"></td>
-				<td th:text="${leaveVO.leaveDate}"></td>
-				<td th:text="${leaveVO.empVO.empName}"></td>
+				<td th:text="${assignVO.assignId}"></td>
+				<td th:text="${assignVO.assignDate}"></td>
+				<td th:text="${assignVO.empVO.empName}"></td>
 			
 			<td>
 			  <form method="post" th:action="@{/assign/getOne_For_Update}" style="margin-bottom: 0px;">

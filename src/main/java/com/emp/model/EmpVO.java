@@ -73,6 +73,8 @@ public class EmpVO implements java.io.Serializable{
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="empVO")
 	private Set<AssignVO> assigns = new HashSet<AssignVO>();
 	
+	@OneToMany(mappedBy="leaveEmpId")
+	private Set<LeaveVO> leaves = new HashSet<LeaveVO>();
 
 	
 	public Integer getEmpId() {

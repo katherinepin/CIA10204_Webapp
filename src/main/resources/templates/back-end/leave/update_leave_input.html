@@ -12,9 +12,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>員工資料修改 - update_assign_input.html</title>
+<title>員工資料修改 - update_leave_input.html</title>
 
-<head th:insert="~{/back-end/assign/included-fragment}"></head>
+<head th:insert="~{/back-end/leave/included-fragment}"></head>
 <style type="text/css">
 	
 	button {
@@ -47,25 +47,25 @@
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
-		 <div align="center"> <h2>員工資料修改 - update_assign_input.html</h2>
-		 <h3><a class="navbar-brand" th:href="@{/assign/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁</a></h3></div>
+		 <div align="center"> <h2>員工資料修改 - update_leave_input.html</h2>
+		 <h3><a class="navbar-brand" th:href="@{/leave/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁</a></h3></div>
 </nav>
 
 	<div align="center">
 		<h3><b>所有欄位皆為必填欄位</b></h3>
-		<form th:action="@{update}" method="post" th:object="${assignVO}" enctype="multipart/form-data">
+		<form th:action="@{update}" method="post" th:object="${leaveVO}" enctype="multipart/form-data">
 			
 			<div>
 			<label>排班編號:</label>
-			<input type="text" th:field="*{assignId}" style="border:0px ; font-weight: bold;" readonly /><br/>
+			<input type="text" th:field="*{leaveId}" style="border:0px ; font-weight: bold;" readonly /><br/>
 			</div>
 			
 			
 			
 			<div>
 			<label>雇用日期:</label>
-			<input type="date" th:field="*{assignDate}" onclick="hideContent('assignDate.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('assignDate')}" th:errors="*{assignDate}" class="error" id="assignDate.errors"></span>
+			<input type="date" th:field="*{leaveDate}" onclick="hideContent('leaveDate.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('leaveDate')}" th:errors="*{leaveDate}" class="error" id="leaveDate.errors"></span>
 			</div>
 
 

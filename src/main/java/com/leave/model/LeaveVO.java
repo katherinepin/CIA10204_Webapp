@@ -12,11 +12,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import com.emp.model.EmpVO;
 
 @Entity
 @Table(name="`leave`")
 public class LeaveVO {
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@Column(name="leave_id")
@@ -34,7 +37,7 @@ public class LeaveVO {
 	private Date leaveDate;
 	
 	@Column(name="leave_status")
-	private Byte leaveStatus;
+	private Byte leaveStatus = 0;
 	
 	@Column(name="leave_approvaldate")
 	private Timestamp leaveApprovaldate;
@@ -71,7 +74,7 @@ public class LeaveVO {
 	}
 
 	public void setLeaveEmpId(EmpVO leaveEmpId) {
-		leaveEmpId = leaveEmpId;
+		this.leaveEmpId = leaveEmpId;
 	}
 
 	public Date getLeaveDate() {

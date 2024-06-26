@@ -27,9 +27,9 @@ import com.emp.model.EmpVO;
 import com.emp.model.EmpService;
 
 
-//@Controller
-//@Validated
-//@RequestMapping("/emp")
+@Controller
+@Validated
+@RequestMapping("/emp")
 public class EmpnoController {
 	
 	@Autowired
@@ -44,18 +44,16 @@ public class EmpnoController {
 	public String getOne_For_Display(
 		/***************************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 		@NotEmpty(message="員工編號: 請勿空白")
-		@Digits(integer = 4, fraction = 0, message = "員工編號: 請填數字-請勿超過{integer}位數")
-		@Min(value = 7001, message = "員工編號: 不能小於{value}")
-		@Max(value = 7777, message = "員工編號: 不能超過{value}")
-		@RequestParam("empno") String empno,
+		@Digits(integer = 3, fraction = 0, message = "員工編號: 請填數字-請勿超過{integer}位數")
+		@RequestParam("empId") String empId,
 		ModelMap model) {
 		
 		/***************************2.開始查詢資料*********************************************/
 //		EmpService empSvc = new EmpService();
-		EmpVO empVO = empSvc.getOneEmp(Integer.valueOf(empno));
+		EmpVO empVO = empSvc.getOneEmp(Integer.valueOf(empId));
 		
-//		List<EmpVO> list = empSvc.getAll();
-//		model.addAttribute("empListData", list);     // for select_page.html 第97 109行用
+		List<EmpVO> list = empSvc.getAll();
+		model.addAttribute("empListData", list);     // for select_page.html 第97 109行用
 
 		
 		if (empVO == null) {
@@ -81,11 +79,8 @@ public class EmpnoController {
 	          strBuilder.append(violation.getMessage() + "<br>");
 	    }
 	    //==== 以下第92~96行是當前面第77行返回 /src/main/resources/templates/back-end/emp/select_page.html用的 ====   
-//	    model.addAttribute("empVO", new EmpVO());
-//    	EmpService empSvc = new EmpService();
-//		List<EmpVO> list = empSvc.getAll();
-//		model.addAttribute("empListData", list);     // for select_page.html 第97 109行用
-
+		List<EmpVO> list = empSvc.getAll();
+		model.addAttribute("empListData", list);     // for select_page.html 第97 109行用
 		String message = strBuilder.toString();
 	    return new ModelAndView("back-end/emp/select_page", "errorMessage", "請修正以下錯誤:<br>"+message);
 	}

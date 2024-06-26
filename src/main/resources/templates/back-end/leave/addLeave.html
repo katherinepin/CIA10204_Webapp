@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>員工資料新增 - addEmp.html</title>
+<title>員工資料新增 - addLeave.html</title>
 
 <head th:insert="~{/back-end/leave/included-fragment}"></head>
 <style type="text/css">
@@ -47,32 +47,33 @@
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
-		 <div align="center"> <h2>員工資料新增 - addAssign.html</h2>
+		 <div align="center"> <h2>員工資料新增 - addLeave.html</h2>
 		 <h3><a class="navbar-brand" th:href="@{/leave/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁</a></h3></div>
 </nav>
 
 	<div align="center">
 		<h3><b>所有欄位皆為必填欄位</b></h3>
 		<form th:action="@{insert}" method="post" th:object="${leaveVO}" enctype="multipart/form-data">
-				
-			
-<!-- 	
-			<div>
-			<label>排班日期:</label>
-			<input type="date" th:field="*{leaveDate}" onclick="hideContent('leaveDate.errors');" /><br/>
-			</div>
- -->			
-		<div>
-        <label for="leaveDate">排班日期:</label>
-        <input type="date" th:field="*{leaveDate}" onclick="hideContent('leaveDate.errors');" />
-    	</div>
 		
 			<div>
-			<label>選擇員工姓名:</label>
-				<select th:field="*{empVO.empId}">
-				     <option th:each="empVO : ${empListData}" th:value="${empVO.empId}" th:text="${empVO.empName}" />
+				<label>請假員工姓名:</label>
+				<select th:field="*{leaveEmpId.empId}">
+				     <option th:each="leaveEmpId : ${empListData}" th:value="${leaveEmpId.empId}" th:text="${leaveEmpId.empName}" />
 			    </select>
-			</div>
+			</div>		
+			
+		
+			<div>
+        		<label for="leaveDate">請假日期:</label>
+        		<input type="date" th:field="*{leaveDate}" onclick="hideContent('leaveDate.errors');" />
+    		</div>
+		
+			<div>
+				<label>代班員工姓名:</label>
+				<select th:field="*{leaveAssigneeId.empId}">
+				     <option th:each="leaveAssigneeId : ${empListData}" th:value="${leaveAssigneeId.empId}" th:text="${leaveAssigneeId.empName}" />
+			    </select>
+			</div>	
 
 			
 			<div>
@@ -81,7 +82,6 @@
 				<div></div>
 			</div>		
 		</form>
-	
 	</div>
 
 

@@ -70,6 +70,8 @@
 		<th>電子郵件</th>
 		<th>到職日期</th>
 	 	<th>員工狀態</th> 
+	 	<th>修改</th>
+	 	<th>刪除</th> 
 	</tr>
 	<%@ include file="page1.file" %> 
 	<c:forEach var="empVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">

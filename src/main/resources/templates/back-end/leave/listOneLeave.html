@@ -12,9 +12,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>員工資料 - listOneAassign.html</title>
+<title>員工資料 - listOneLeave.html</title>
 
-<head th:insert="~{/back-end/assign/included-fragment}"></head>
+<head th:insert="~{/back-end/leave/included-fragment}"></head>
 <style type="text/css">
 	
     span {
@@ -28,16 +28,20 @@
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
-		 <div align="center"> <h2>員工個人資料 - listOneAassign.html</h2>
-		 <h3><a class="navbar-brand" th:href="@{/assign/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a></h3></div>
+		 <div align="center"> <h2>員工個人資料 - listOneleave.html</h2>
+		 <h3><a class="navbar-brand" th:href="@{/leave/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a></h3></div>
 </nav>
 
-	<div align="center" th:fragment="listOneAssign-div"> <!-- 此div被select_page.html第158行insert用 -->
+	<div align="center" th:fragment="listOneLeave-div"> <!-- 此div被select_page.html第158行insert用 -->
 		<h3><span>查詢結果 :</span></h3>
-		<span>排班編號:</span><span th:text="${assignVO.assignId}"></span><br/>
-		<span>排班日期:</span><span th:text="${assignVO.assignDate}"></span><br/>
- 		<span>員工姓名:</span><span th:text="${assignVO.empVO.empId} + '-[' + ${assignVO.empVO.empName} + ']'"></span><br/>
- 		
+		<span>排班編號:</span><span th:text="${leaveVO.leaveId}"></span><br/>
+	  	<span>申請日期:</span><span th:text="${leaveVO.leaveFilingdate}"></span><br/>
+	  	<span>請假人員:</span><span th:text="${leaveVO.leaveEmpId.empName}"></span><br/>
+		<span>請假日期:</span><span th:text="${leaveVO.leaveDate}"></span><br/>
+		<span>核准狀態:</span><span th:text="${leaveVO.leaveStatus}"></span><br/>
+		<span>核准日期:</span><span th:text="${leaveVO.leaveStatus}"></span><br/>
+ 		<span>代班人員:</span><span th:text="${leaveVO.leaveEmpId.empId} + '-[' + ${leaveVO.leaveEmpId.empName} + ']'"></span><br/>
+
 	</div>
 
 
