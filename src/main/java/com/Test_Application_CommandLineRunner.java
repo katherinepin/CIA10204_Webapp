@@ -38,23 +38,23 @@ public class Test_Application_CommandLineRunner implements CommandLineRunner {
     	EmpVO empVO = new EmpVO();
     	empVO.setEmpId(2); 
     	EmpVO assignee = new EmpVO();
-    	assignee.setEmpId(1);
-    	
-    	LeaveVO leaveVO = new LeaveVO();
-		leaveVO.setLeaveEmpId(empVO);
-    	leaveVO.setLeaveDate(java.sql.Date.valueOf("2024-01-02"));
-    	leaveVO.setLeaveStatus(Byte.valueOf("0"));
-    	leaveVO.setLeaveApprovaldate(java.sql.Timestamp.valueOf("2024-01-03 00:00:00"));
-    	leaveVO.setLeaveAssigneeId(assignee);
-    	
-		repository.save(leaveVO);
+    	assignee.setEmpId(3);
+//    	
+//    	LeaveVO leaveVO = new LeaveVO();
+//		leaveVO.setLeaveEmpId(empVO);
+//    	leaveVO.setLeaveDate(java.sql.Date.valueOf("2024-01-02"));
+//    	leaveVO.setLeaveStatus(Byte.valueOf("0"));
+//    	leaveVO.setLeaveApprovaldate(java.sql.Timestamp.valueOf("2024-01-03 00:00:00"));
+//    	leaveVO.setLeaveAssigneeId(assignee);
+//    	
+//		repository.save(leaveVO);
 		
 		//● 修改
 //		LeaveVO leaveVO2 = new LeaveVO();
 //		
 //    	leaveVO2.setLeaveId(2);
 //    	leaveVO2.setLeaveEmpId(empVO);
-//    	leaveVO2.setLeaveDate(java.sql.Date.valueOf("2024-01-03"));
+//    	leaveVO2.setLeaveDate(java.sql.Date.valueOf("2024-01-04"));
 //    	leaveVO2.setLeaveStatus(Byte.valueOf("0"));
 //    	leaveVO2.setLeaveApprovaldate(java.sql.Timestamp.valueOf("2024-01-03 00:00:00"));
 //    	leaveVO2.setLeaveAssigneeId(assignee);

@@ -12,9 +12,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>排班資料管理 - select_page.html</title>
+<title>員工資料管理 - select_page.html</title>
 
-<head th:insert="~{/back-end/assign/included-fragment}"></head> <!-- 使用included-fragment.html網頁的全部 -->
+<head th:insert="~{/back-end/emp/included-fragment}"></head> <!-- 使用included-fragment.html網頁的全部 -->
 <style type="text/css">
 
 	button {
@@ -78,74 +78,74 @@
 	<div class="errorblock" th:utext="${errorMessage}">${errorMessage}</div><br>
 	<div class="a">
 	  <ul>
-		<li><h5><a href='listAllAssign'>List</a> all Assigns. <br><br></h5></li>
+		<li><h5><a href='listAllEmp'>List</a> all Emps. <br><br></h5></li>
 
 		<li>
 			<form method="post" th:action="@{getOne_For_Display}">
-				輸入請假編號:
-				<input type="text" name="assignId" th:value="${param.assignId}" > 
-				<input type="submit" value="送出">
+				輸入員工編號:
+				<input type="text" name="empId" th:value="${param.empId}" > 
+				<input type="submit" value="送出"> (輸入如7001)
 			</form><br>
 		</li>
+
 		
 		
-<!--  		<li><form method="post" th:action="@{getOne_For_Display}">
+		
+		<li><form method="post" th:action="@{getOne_For_Display}">
 				選擇員工編號:
 				<select name="empId">
-				     <option th:each="empVO : ${empListData}" th:value="${assignVO.empVO.empId}" th:text="${assignVO.empVO.empId}" />
+				     <option th:each="empVO : ${empListData}" th:value="${empVO.empId}" th:text="${empVO.empId}" />
 			    </select>
 				<input type="submit" value="送出">
 			</form><br>
 		</li>
 
-
-
-		<li><form method="post" th:action="@{listAssigns_ByCompositeQuery}">
-			選擇員工姓名:
-                <select name="empId">
-                    <option value="" disabled selected>選擇員工</option>
-                    <option th:each="assignVO : ${assignListData}" th:value="${assignVO.empVO.empId}" th:text="${assignVO.empVO.empName}" />
-                </select><br>
+		
+		
+		
+		<li><form method="post" th:action="@{getOne_For_Display}">
+				選擇員工姓名:
+				<select name="empId">
+				     <option th:each="empVO : ${empListData}" th:value="${empVO.empId}" th:text="${empVO.empName}" />
+			    </select>
 				<input type="submit" value="送出">
 			</form><br>
 		</li>
 		
--->		
+		
 		
 		
 <!--  萬用複合查詢-以下欄位-可隨意增減 -->
- <!--  
+  
   <li>   
-    <form method="post" th:action="@{listAssigns_ByCompositeQuery}">
+    <form method="post" th:action="@{listEmps_ByCompositeQuery}">
         <font color=blue>萬用複合查詢:</font><br>
+        輸入員工編號: 
+        <input type="text" name="empId" value="1"><br>
+           
+        輸入員工姓名: 
+        <input type="text" name="empName" value="Kathy"><br>
+  
         
-        排班日期:
-	    <input name="assignDate" type="date">
+        雇用日期:
+	    <input name="empHiredate" type="date">
 	    
         <input type="submit" value="送出">
-        
-    
-        選擇員工: 
- 		<select th:field="*{empVO.empId}">
-			<option value="">
-			<option th:each="empVO : ${empListData}" th:value="${empVO.empId}" th:text="${emoVO.empId}" />
-		</select><br>
-  
+     
      </form>
   </li>
-    --> 
 </ul>	
 	
-      <h4><span>排班管理</span></h4>
+      <h4><span>員工管理</span></h4>
 	  <ul>
-		  <li><h5><a href='addAssign'>Add</a> a new Assign.</h5></li>
+		  <li><h5><a href='addEmp'>Add</a> a new Emp.</h5></li>
 	  </ul>
 	</div>
     
     <!-- 旗標getOne_For_Display見EmpnoController.java的第74行 -->
     <div class="b" th:if="${getOne_For_Display}">
         <!--使用listOneEmp.html網頁的listOneEmp-div片段--> <!-- 見listOneEmp.html的第35行的th:fragment="listOneEmp-div" --> <!-- 使用th:replace也可 -->
-        <div th:insert="~{/back-end/assign/listOneAssign :: listOneAssign-div}"></div>
+        <div th:insert="~{/back-end/emp/listOneEmp :: listOneEmp-div}"></div>
     </div>
 
 </body>

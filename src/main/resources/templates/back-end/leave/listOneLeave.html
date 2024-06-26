@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>員工資料 - listOneLeave.html</title>
+<title>請假資料 - listOneLeave.html</title>
 
 <head th:insert="~{/back-end/leave/included-fragment}"></head>
 <style type="text/css">
@@ -40,7 +40,7 @@
 		<span>請假日期:</span><span th:text="${leaveVO.leaveDate}"></span><br/>
 		<span>核准狀態:</span><span th:text="${leaveVO.leaveStatus}"></span><br/>
 		<span>核准日期:</span><span th:text="${leaveVO.leaveStatus}"></span><br/>
- 		<span>代班人員:</span><span th:text="${leaveVO.leaveEmpId.empId} + '-[' + ${leaveVO.leaveEmpId.empName} + ']'"></span><br/>
+ 		<span>代班人員:</span><span th:text="${leaveVO.leaveAssigneeId.empId} + '-[' + ${leaveVO.leaveAssigneeId.empName} + ']'"></span><br/>
 
 	</div>
 

@@ -26,7 +26,7 @@ public class LeaveVO {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer leaveId;
 	
-	@Column(name="leave_filingdate")
+	@Column(name="leave_filingdate", updatable = false)
 	private Timestamp leaveFilingdate;
 	
 	@ManyToOne

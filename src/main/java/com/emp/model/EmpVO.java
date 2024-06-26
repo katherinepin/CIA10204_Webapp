@@ -64,7 +64,6 @@ public class EmpVO implements java.io.Serializable{
 	private String empEmail;
 	
 	@Column(name="emp_hiredate")
-	@DateTimeFormat(pattern="yyyy-MM-dd") 
 	private Date empHiredate;
 	
 	@Column(name="emp_status")
@@ -72,10 +71,12 @@ public class EmpVO implements java.io.Serializable{
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="empVO")
 	private Set<AssignVO> assigns = new HashSet<AssignVO>();
-	
-	@OneToMany(mappedBy="leaveEmpId")
-	private Set<LeaveVO> leaves = new HashSet<LeaveVO>();
-
+//	
+//	@OneToMany(mappedBy="leaveEmpId")
+//	private Set<LeaveVO> leaveEmpId = new HashSet<LeaveVO>();
+//
+//	@OneToMany(mappedBy="leaveAssignId")
+//	private Set<LeaveVO> leaveAssignId = new HashSet<LeaveVO>();
 	
 	public Integer getEmpId() {
 		return empId;

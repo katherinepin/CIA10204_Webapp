@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>所有員工資料 - listAllLeave.html</title>
+<title>所有請假資料 - listAllLeave.html</title>
 
 <head th:insert="~{/back-end/leave/included-fragment}"></head>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>                                    <!-- ●●js  for jquery datatables 用 -->
@@ -90,7 +90,7 @@ body {
 				<td th:text="${leaveVO.leaveDate}"></td>
 				<td th:text="${leaveVO.leaveStatus}"></td>
 				<td th:text="${leaveVO.leaveApprovaldate}"></td>
-				<td th:text="${leaveVO.leaveEmpId.empName}"></td>
+				<td th:text="${leaveVO.leaveAssigneeId.empName}"></td>
 			
 			<td>
 			  <form method="post" th:action="@{/leave/getOne_For_Update}" style="margin-bottom: 0px;">

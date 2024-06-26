@@ -70,7 +70,7 @@
 
 
 			<div>
-			<label>部門:</label>
+			<label>員工姓名:</label>
 			<select th:field="*{empVO.empId}">
 				<option th:each="empVO : ${empListData}" th:value="${empVO.empId}" th:text="${empVO.empName}" />
 			</select>

@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>員工資料修改 - update_leave_input.html</title>
+<title>請假資料修改 - update_leave_input.html</title>
 
 <head th:insert="~{/back-end/leave/included-fragment}"></head>
 <style type="text/css">
@@ -56,28 +56,30 @@
 		<form th:action="@{update}" method="post" th:object="${leaveVO}" enctype="multipart/form-data">
 			
 			<div>
-			<label>排班編號:</label>
+			<label>請假編號:</label>
 			<input type="text" th:field="*{leaveId}" style="border:0px ; font-weight: bold;" readonly /><br/>
 			</div>
 			
+			<div>
+			<label>請假員工:</label>
+			<input type="text" th:field="*{leaveEmpId.empId}" style="border:0px ; font-weight: bold;"  /><br/>
+
+			</div>
 			
 			
 			<div>
-			<label>雇用日期:</label>
+			<label>請假日期:</label>
 			<input type="date" th:field="*{leaveDate}" onclick="hideContent('leaveDate.errors');" /><br/>
 			<span  th:if="${#fields.hasErrors('leaveDate')}" th:errors="*{leaveDate}" class="error" id="leaveDate.errors"></span>
 			</div>
-
-
+			
 			<div>
-			<label>部門:</label>
-			<select th:field="*{empVO.empId}">
-				<option th:each="empVO : ${empListData}" th:value="${empVO.empId}" th:text="${empVO.empName}" />
+			<label>代班員工:</label>
+			<select th:field="*{leaveAssigneeId.empId}">
+				<option th:each="leaveAssigneeId : ${empListData}" th:value="${leaveAssigneeId.empId}" th:text="${leaveAssigneeId.empName}" />
 			</select>
-			<span th:if="${#fields.hasErrors('empVO.empId')}" th:errors="*{empVO.empId}" class="error" id="empVO.empId.errors"></span>
 			</div>
 
-			
 
 			
 			<div>

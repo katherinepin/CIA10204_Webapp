@@ -12,9 +12,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>請假資料新增 - addLeave.html</title>
+<title>員工資料新增 - addEmp.html</title>
 
-<head th:insert="~{/back-end/leave/included-fragment}"></head>
+<head th:insert="~{/back-end/emp/included-fragment}"></head>
 <style type="text/css">
 	
 	button {
@@ -47,34 +47,62 @@
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
-		 <div align="center"> <h2>員工資料新增 - addLeave.html</h2>
-		 <h3><a class="navbar-brand" th:href="@{/leave/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁</a></h3></div>
+		 <div align="center"> <h2>員工資料新增 - addEmp.html</h2>
+		 <h3><a class="navbar-brand" th:href="@{/emp/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁</a></h3></div>
 </nav>
 
 	<div align="center">
 		<h3><b>所有欄位皆為必填欄位</b></h3>
-		<form th:action="@{insert}" method="post" th:object="${leaveVO}" enctype="multipart/form-data">
-		
-			<div>
-				<label>請假員工姓名:</label>
-				<select th:field="*{leaveEmpId.empId}">
-				     <option th:each="leaveEmpId : ${empListData}" th:value="${leaveEmpId.empId}" th:text="${leaveEmpId.empName}" />
-			    </select>
-			</div>		
+		<form th:action="@{insert}" method="post" th:object="${empVO}" enctype="multipart/form-data">
 			
-		
+			
+			
+			
+			
+			
 			<div>
-        		<label for="leaveDate">請假日期:</label>
-        		<input type="date" th:field="*{leaveDate}" onclick="hideContent('leaveDate.errors');" />
-    		</div>
-		
+			<label>員工姓名:</label>
+			<input type="text" th:field="*{empName}" onclick="hideContent('empName.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('empName')}" th:errors="*{empName}" class="error" id="empName.errors"></span>
+			</div>
+			
 			<div>
-				<label>代班員工姓名:</label>
-				<select th:field="*{leaveAssigneeId.empId}">
-				     <option th:each="leaveAssigneeId : ${empListData}" th:value="${leaveAssigneeId.empId}" th:text="${leaveAssigneeId.empName}" />
-			    </select>
-			</div>	
+			<label>帳號:</label>
+			<input type="text" th:field="*{empAccount}" onclick="hideContent('empAccount.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('empAccount')}" th:errors="*{empAccount}" class="error" id="empAccount.errors"></span>
+			</div>
+			
+			<div>
+			<label>密碼:</label>
+			<input type="text" th:field="*{empPassword}" onclick="hideContent('empPassword.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('empPassword')}" th:errors="*{empPassword}" class="error" id="empPassword.errors"></span>
+			</div>
 
+			<div>
+			<label>手機:</label>
+			<input type="text" th:field="*{empPhone}" onclick="hideContent('empPhone.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('empPhone')}" th:errors="*{empPhone}" class="error" id="empPhone.errors"></span>
+			</div>
+
+			<div>
+			<label>地址:</label>
+			<input type="text" th:field="*{empAddress}" onclick="hideContent('empAddress.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('empAddress')}" th:errors="*{empAddress}" class="error" id="empAddress.errors"></span>
+			</div>
+
+			<div>
+			<label>電子郵件:</label>
+			<input type="text" th:field="*{empEmail}" onclick="hideContent('empEmail.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('empEmail')}" th:errors="*{empEmail}" class="error" id="empEmail.errors"></span>
+			</div>
+
+			<div>
+			<label>雇用日期:</label>
+			<input type="date" th:field="*{empHiredate}" onclick="hideContent('empHiredate.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('empHiredate')}" th:errors="*{empHiredate}" class="error" id="empHiredate.errors"></span>
+			</div>
+
+			
 			
 			<div>
 				<div></div>
@@ -82,6 +110,7 @@
 				<div></div>
 			</div>		
 		</form>
+	
 	</div>
 
 

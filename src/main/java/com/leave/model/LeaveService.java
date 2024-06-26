@@ -1,16 +1,14 @@
 package com.leave.model;
 
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.mapping.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import hibernate.util.CompositeQuery.HibernateUtil_CompositeQuery_Emp3;
+import com.emp.model.EmpRepository;
+import com.emp.model.EmpVO;
 
 @Service("leaveService")
 public class LeaveService {
@@ -29,8 +27,9 @@ public class LeaveService {
 	
 	public void updateLeave(LeaveVO leaveVO) {
 		repository.save(leaveVO);
-	}
-	
+
+ 
+}	
 	public void deleteLeave(Integer leaveId) {
 		if (repository.existsById(leaveId))
 			repository.deleteByLeaveId(leaveId);
