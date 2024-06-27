@@ -1,6 +1,7 @@
 package com.leave.model;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.hibernate.SessionFactory;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.emp.model.EmpRepository;
 import com.emp.model.EmpVO;
+
+import hibernate.util.CompositeQuery.HibernateUtil_CompositeQuery_Emp3;
 
 @Service("leaveService")
 public class LeaveService {
@@ -44,9 +47,11 @@ public class LeaveService {
 	public List<LeaveVO> getAll() {
 		return repository.findAll();
 	}
+
+
 	
-//	public List<LeaveVO> getAll(Map<String, String[]> map) {
-//		return HibernateUtil_CompositeQuery_Emp3.getAllC(map,sessionFactory.openSession());
-//	}
+	public List<LeaveVO> getAll(Map<String, String[]> map) {
+		return HibernateUtil_CompositeQuery_Emp3.getAllC(map,sessionFactory.openSession());
+	}
 	
 }

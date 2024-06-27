@@ -112,9 +112,9 @@
 -->		
 		
 <!--  萬用複合查詢-以下欄位-可隨意增減 -->
-<!--  
+
   <li>   
-    <form method="post" th:action="@{listLeaves_ByCompositeQuery}">
+    <form method="post" th:action="@{listleaves_ByCompositeQuery}">
         <font color=blue>萬用複合查詢:</font><br>
     
         排班日期:
@@ -124,11 +124,10 @@
         
     
         選擇員工: 
- 		<select th:field="*{empVO.empId}">
+  		<select th:field="*{leaveEmpId.empId}">
 			<option value="">
-			<option th:each="empVO : ${empListData}" th:value="${empVO.empId}" th:text="${emoVO.empId}" />
+			<option th:each="leaveEmpId : ${empListData}" th:value="${leaveEmpId.empId}" th:text="${leaveEmpId.empId}" />
 		</select><br>
-   -->  
      </form>
   </li>
 </ul>	

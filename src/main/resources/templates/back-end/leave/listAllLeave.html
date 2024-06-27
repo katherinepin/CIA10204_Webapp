@@ -63,11 +63,19 @@ body {
 		 <div align="center"> <h2>所有請假資料 - listAllLeave.html</h2>
 		 <h3><a class="navbar-brand" th:href="@{/leave/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a></h3></div>
 </nav>
+    <div>
+        <form th:action="@{/leave/batchApprove}" method="post">
+            <button type="submit">批量核准</button>
+        </form>
+        <form th:action="@{/leave/batchReject}" method="post">
+            <button type="submit">批量不核准</button>
+        </form>
+    </div>
 
 <table id="example" class="display" style="width: 100%">
   <thead >
 	<tr style="background-color:#CCCCFF">
-
+		<th><input type="checkbox" onclick="toggleCheckboxes(this)">勾選</th>
 		<th>請假編號</th>
 		<th>申請日期</th>
 		<th>請假人員</th>
@@ -83,7 +91,7 @@ body {
   <tbody>
 		<th:block th:each="leaveVO : ${leaveListData}">
 			<tr>
-
+				<td><input type="checkbox" id="leaveIds" value="${leaveVO.leaveId}"/></td>
 				<td th:text="${leaveVO.leaveId}"></td>
 				<td th:text="${leaveVO.leaveFilingdate}"></td>
 				<td th:text="${leaveVO.leaveEmpId.empName}"></td>
@@ -108,6 +116,15 @@ body {
 		</th:block>
   </tbody>
 </table>
+<script>
 
+function toggleCheckboxes(source) {
+    checkboxes = document.getElementsByName('leaveIds');
+    
+    for(var i=0, n=checkboxes.length;i<n;i++) {
+        checkboxes[i].checked = source.checked;
+    }
+}
+</script>
 </body>
 </html>

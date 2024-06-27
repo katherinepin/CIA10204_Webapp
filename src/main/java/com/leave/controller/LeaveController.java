@@ -129,6 +129,13 @@ public class LeaveController {
 		List<EmpVO> list = empSvc.getAll();
 		return list;
 	}
-
+	
+	@PostMapping("listleaves_ByCompositeQuery")
+	public String listAllLeave(HttpServletRequest req, Model model) {
+		Map<String, String[]> map = req.getParameterMap();
+		List<LeaveVO> list = leaveSvc.getAll(map);
+		model.addAttribute("leaveListData", list); // for listAllEmp.html 第85行用
+		return "back-end/leave/listAllLeave";
+	}
 
 }

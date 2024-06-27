@@ -23,40 +23,41 @@ import org.hibernate.Transaction;
 
 import com.assign.model.AssignVO;
 import com.emp.model.EmpVO;
+import com.leave.model.LeaveVO;
 
 public class HibernateUtil_CompositeQuery_Emp3 {
 
-	public static Predicate get_aPredicate_For_AnyDB(CriteriaBuilder builder, Root<AssignVO> root, String columnName, String value) {
+	public static Predicate get_aPredicate_For_AnyDB(CriteriaBuilder builder, Root<LeaveVO> root, String columnName, String value) {
 
 		Predicate predicate = null;
 
-		if ("assignId".equals(columnName)) // 用於Integer
+		if ("leaveId".equals(columnName)) // 用於Integer
 			predicate = builder.equal(root.get(columnName), Integer.valueOf(value));
 
-		else if ("empHiredate".equals(columnName)) // 用於date
+		else if ("leaveDate".equals(columnName)) // 用於date
 			predicate = builder.equal(root.get(columnName), java.sql.Date.valueOf(value));
-		else if ("deptno".equals(columnName)) {
-			EmpVO empVO = new EmpVO();
-			empVO.setEmpId(Integer.valueOf(value));
-			predicate = builder.equal(root.get("empVO"), empVO);
+		else if ("empId".equals(columnName)) {
+			EmpVO leaveEmpId = new EmpVO();
+			leaveEmpId.setEmpId(Integer.valueOf(value));
+			predicate = builder.equal(root.get("leaveEmpId"), leaveEmpId);
 		}
 
 		return predicate;
 	}
 
 	@SuppressWarnings("unchecked")
-	public static List<AssignVO> getAllC(Map<String, String[]> map, Session session) {
+	public static List<LeaveVO> getAllC(Map<String, String[]> map, Session session) {
 
 //		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
-		List<AssignVO> list = null;
+		List<LeaveVO> list = null;
 		try {
 			// 【●創建 CriteriaBuilder】
 			CriteriaBuilder builder = session.getCriteriaBuilder();
 			// 【●創建 CriteriaQuery】
-			CriteriaQuery<AssignVO> criteriaQuery = builder.createQuery(AssignVO.class);
+			CriteriaQuery<LeaveVO> criteriaQuery = builder.createQuery(LeaveVO.class);
 			// 【●創建 Root】
-			Root<AssignVO> root = criteriaQuery.from(AssignVO.class);
+			Root<LeaveVO> root = criteriaQuery.from(LeaveVO.class);
 
 			List<Predicate> predicateList = new ArrayList<Predicate>();
 			
@@ -72,7 +73,7 @@ public class HibernateUtil_CompositeQuery_Emp3 {
 			}
 			System.out.println("predicateList.size()="+predicateList.size());
 			criteriaQuery.where(predicateList.toArray(new Predicate[predicateList.size()]));
-			criteriaQuery.orderBy(builder.asc(root.get("assignId")));
+			criteriaQuery.orderBy(builder.asc(root.get("leaveId")));
 			// 【●最後完成創建 javax.persistence.Query●】
 			Query query = session.createQuery(criteriaQuery); //javax.persistence.Query; //Hibernate 5 開始 取代原 org.hibernate.Query 介面
 			list = query.getResultList();
