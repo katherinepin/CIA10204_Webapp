@@ -117,17 +117,24 @@
     <form method="post" th:action="@{listleaves_ByCompositeQuery}">
         <font color=blue>萬用複合查詢:</font><br>
     
+    
+    	選擇員工: 
+   		<select th:field="*{empVO.empId}">
+			<option value="">
+			<option th:each="empVO : ${empListData}" th:value="${empVO.empId}" th:text="${empVO.empName}" />
+	
+		</select><br>
+		
         排班日期:
 	    <input name="leaveDate" type="date">
+	    
+
 	    
         <input type="submit" value="送出">
         
     
-        選擇員工: 
-  		<select th:field="*{leaveEmpId.empId}">
-			<option value="">
-			<option th:each="leaveEmpId : ${empListData}" th:value="${leaveEmpId.empId}" th:text="${leaveEmpId.empId}" />
-		</select><br>
+
+
      </form>
   </li>
 </ul>	

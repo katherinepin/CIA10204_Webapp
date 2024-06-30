@@ -37,9 +37,9 @@ public class HibernateUtil_CompositeQuery_Emp3 {
 		else if ("leaveDate".equals(columnName)) // 用於date
 			predicate = builder.equal(root.get(columnName), java.sql.Date.valueOf(value));
 		else if ("empId".equals(columnName)) {
-			EmpVO leaveEmpId = new EmpVO();
-			leaveEmpId.setEmpId(Integer.valueOf(value));
-			predicate = builder.equal(root.get("leaveEmpId"), leaveEmpId);
+			EmpVO empVO = new EmpVO();
+			empVO.setEmpId(Integer.valueOf(value));
+			predicate = builder.equal(root.get("leaveEmpId"), empVO);
 		}
 
 		return predicate;

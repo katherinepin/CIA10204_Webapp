@@ -88,7 +88,7 @@ public class LeavenoController {
 //    	EmpService empSvc = new EmpService();
 		List<LeaveVO> list = leaveSvc.getAll();
 		model.addAttribute("leaveListData", list);     // for select_page.html 第97 109行用
-		model.addAttribute("leaveEmpId", new EmpVO());  // for select_page.html 第133行用
+		model.addAttribute("empVO", new EmpVO());  // for select_page.html 第133行用
 		List<EmpVO> list2 = empSvc.getAll();
     	model.addAttribute("empListData",list2);    // for select_page.html 第135行用
 		String message = strBuilder.toString();
