@@ -54,4 +54,5 @@ public class LeaveService {
 		return HibernateUtil_CompositeQuery_Emp3.getAllC(map,sessionFactory.openSession());
 	}
 	
+
 }

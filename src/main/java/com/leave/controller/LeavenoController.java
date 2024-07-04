@@ -50,7 +50,7 @@ public class LeavenoController {
 		@RequestParam("leaveId") String leaveId,ModelMap model) {
 
 		/***************************2.開始查詢資料*********************************************/
-//		EmpService empSvc = new EmpService();
+//		EmpService empSvc = new EmpService()
 
 		
 		LeaveVO leaveVO = leaveSvc.getOneLeave(Integer.valueOf(leaveId));
