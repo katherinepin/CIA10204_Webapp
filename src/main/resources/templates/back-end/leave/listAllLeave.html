@@ -53,40 +53,48 @@ body {
 	               	     <button class="btn_no" id="rejectBtn">不核准</button>
 					</div>
 				</form>
-				<table class="schedule-table">
-			  		<thead>
-						<tr>
-					        <th>申請日期</th>
-					        <th>請假員工</th>
-					        <th>請假日期</th>
-					        <th>代班員工</th>
-					        <th>核准日期</th>
-					        <th>核准狀態</th>
-						</tr>
-			  		</thead>
-			  		<tbody>
-						<th:block th:each="leaveVO : ${leaveListData}">
-							<th:block th:if="${leaveVO.leaveStatus == 0}">
-								<tr>
-									<td th:text="${leaveVO.leaveFilingdate}"></td>
-									<td th:text="${leaveVO.leaveEmpId.empName}"></td>
-									<td th:text="${leaveVO.leaveDate}"></td>
-									<td th:text="${leaveVO.leaveAssigneeId.empName}"></td>
-									<td th:text="${leaveVO.leaveApprovaldate}"></td>
-									<td th:field="*{leaveStatus}">
-										<select size="1" name="leaveStatus">
-						        		  <option value="0" th:selected="${leaveVO.leaveStatus == 0}" selected>未審核</option>
-                           				  <option value="1" th:selected="${leaveVO.leaveStatus == 1}">審核通過</option>
-                            			  <option value="2" th:selected="${leaveVO.leaveStatus == 2}">審核不通過</option>
-							        	</select>
-									</td>
-
-								</tr>
+				<form method="post" th:action="@{updateapproval}" style="margin-bottom: 0px;">
+					<table class="schedule-table">
+				  		<thead>
+							<tr>
+						        <th>申請日期</th>
+						        <th>請假員工</th>
+						        <th>請假日期</th>
+						        <th>代班員工</th>
+						        <th>核准日期</th>
+						        <th>核准狀態</th>
+						        <th>送出</th>
+							</tr>
+				  		</thead>
+				  		<tbody>
+							<th:block th:each="leaveVO : ${leaveListData}">
+								<th:block th:if="${leaveVO.leaveStatus == 0}">
+									<tr>
+										<td th:text="${leaveVO.leaveFilingdate}"></td>
+										<td th:text="${leaveVO.leaveEmpId.empName}"></td>
+										<td th:text="${leaveVO.leaveDate}" th:value="${leaveVO.leaveDate}"></td>
+										<td th:text="${leaveVO.leaveAssigneeId.empName}"></td>
+										<td th:text="${leaveVO.leaveApprovaldate}"></td>
+										<td>
+											
+											<select name="leaveStatus">
+							        		  <option th:value="0" th:selected="${leaveVO.leaveStatus == 0}" selected>未審核</option>
+	                           				  <option th:value="1" th:selected="${leaveVO.leaveStatus == 1}">審核通過</option>
+	                            			  <option th:value="2" th:selected="${leaveVO.leaveStatus == 2}">審核不通過</option>
+								        	</select>
+										</td>
+										<td>
+											    <input type="submit" value="送出">
+											    <input type="hidden" name="leaveId" th:value="${leaveVO.leaveId}">									    
+										</td>
+										
+									</tr>
+								</th:block>
 							</th:block>
-						</th:block>
-					
-			 		 </tbody>
-				</table>
+						
+				 		 </tbody>
+					</table>
+				</form>
             </div>
             
 		            <!-- 審核通過內容 -->
