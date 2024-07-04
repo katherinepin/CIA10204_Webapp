@@ -18,7 +18,6 @@ public interface LeaveRepository extends JpaRepository<LeaveVO, Integer> {
 	void deleteByLeaveId(int leaveId);
 
 
-
 //	//● (自訂)條件查詢
 //	@Query(value = "from LeaveVO where leave_id=?1 and emp_hiredate=?2 order by Assign_id")
 //	List<LeaveVO> findByOthers(int empId , java.sql.Date empHiredate);

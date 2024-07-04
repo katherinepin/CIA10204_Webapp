@@ -1,6 +1,7 @@
 package com.leave.controller;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.assign.model.AssignVO;
 import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
 import com.leave.model.LeaveService;
@@ -122,6 +122,33 @@ public class LeaveController {
 		model.addAttribute("success", "- (刪除成功)");
 		return "back-end/leave/listAllLeave"; // 刪除完成後轉交listAllEmp.html
 	}
+	
+	@PostMapping("updateapproval")
+	public String updateApproval(@RequestParam("leaveId") String leaveId,
+            @RequestParam("leaveStatus") Byte leaveStatus,
+			ModelMap model) {
+		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+
+		LeaveVO leaveVO = leaveSvc.getOneLeave(Integer.valueOf(leaveId));
+	    if (leaveVO != null) {
+
+	    	 if (leaveStatus == 1) {
+	             leaveVO.approveLeave(); // 審核通過
+	         } else if (leaveStatus == 2) {
+	             leaveVO.rejectLeave(); // 審核不通過
+	         }
+		/*************************** 2.開始修改資料 *****************************************/
+		leaveSvc.updateLeave(leaveVO);
+		  }
+
+//		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
+		model.addAttribute("success", "- (修改成功)");
+
+		model.addAttribute("leaveVO", leaveVO);
+		
+		return "redirect:/leave/listAllLeave"; 
+	}
+	
 
 
 	@ModelAttribute("empListData")

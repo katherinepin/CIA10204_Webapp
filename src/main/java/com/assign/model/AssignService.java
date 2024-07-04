@@ -48,8 +48,8 @@ public class AssignService {
 
 
 
-	public List<AssignVO> getAll(Map<String, String[]> map) {
-		return HibernateUtil_CompositeQuery_Emp3.getAllC(map,sessionFactory.openSession());
-	}
+//	public List<AssignVO> getAll(Map<String, String[]> map) {
+//		return HibernateUtil_CompositeQuery_Emp3.getAllC(map,sessionFactory.openSession());
+//	}
 
 }

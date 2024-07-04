@@ -160,12 +160,12 @@ public class AssignController {
 	/*
 	 * This method will be called on select_page.html form submission, handling POST request
 	 */
-	@PostMapping("listAssigns_ByCompositeQuery")
-	public String listAllAssign(HttpServletRequest req, Model model) {
-		Map<String, String[]> map = req.getParameterMap();
-		List<AssignVO> list = assignSvc.getAll(map); 
-		model.addAttribute("assignListData", list); // for listAllEmp.html 第85行用
-		return "back-end/assign/listAllAssign";
-	}
+//	@PostMapping("listAssigns_ByCompositeQuery")
+//	public String listAllAssign(HttpServletRequest req, Model model) {
+//		Map<String, String[]> map = req.getParameterMap();
+//		List<AssignVO> list = assignSvc.getAll(map); 
+//		model.addAttribute("assignListData", list); // for listAllEmp.html 第85行用
+//		return "back-end/assign/listAllAssign";
+//	}
 
 }

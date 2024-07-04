@@ -109,11 +109,28 @@ public class LeaveVO {
 		this.leaveAssigneeId = leaveAssigneeId;
 	}
 	
-	 public void approveLeave() {
+
+	public void approveLeave() {
 	        this.leaveApprovaldate = new Timestamp(System.currentTimeMillis());
 	        this.leaveStatus = 1; // Assuming 1 means approved
-	    }
 
+	        
+	        
+	    }
+	public void rejectLeave() {
+        this.leaveApprovaldate = new Timestamp(System.currentTimeMillis());
+        this.leaveStatus = 2; // Assuming 1 means approved
+
+        
+        
+    }
+	
+//      這是改為批次的
+//	    if ("pass".equals(leaveStatus)) {
+//	        this.leaveStatus = 1; // 1 表示审批通过
+//	    } else if ("fail".equals(leaveStatus)) {
+//	        this.leaveStatus = 2; // 2 表示审批不通过
+//	    }
 
 	
 }

@@ -87,6 +87,8 @@
       			  <option th:if="${leaveVO.leaveStatus != 0}" value="0">未審核</option>
 				  <option th:if="${leaveVO.leaveStatus == 1}" value="1" selected>審核通過</option>
 				  <option th:if="${leaveVO.leaveStatus != 1}" value="1">審核通過</option>
+				  <option th:if="${leaveVO.leaveStatus == 2}" value="2" selected>審核通過</option>
+				  <option th:if="${leaveVO.leaveStatus != 2}" value="2">審核通過</option>
 	        	</select>
 			</div>
 
