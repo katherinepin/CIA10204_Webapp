@@ -2,14 +2,11 @@ package com.assign.controller;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assign.model.AssignService;
 import com.assign.model.AssignVO;
@@ -35,36 +33,39 @@ public class AssignController {
 	EmpService empSvc;
 
 	/*
-	 * This method will serve as addEmp.html handler.
+	 * This method will serve as addEmp.html handler
 	 */
 	@GetMapping("addAssign")
 	public String addAssign(ModelMap model) {
 		AssignVO assignVO = new AssignVO();
+	    List<EmpVO> List = empSvc.getAll(); // 確保這裡正確取得所有員工
 		model.addAttribute("assignVO", assignVO);
+	    model.addAttribute("empListData", List); // 傳遞到前端模板
 		return "back-end/assign/addAssign";
 	}
 
 	/*
 	 * This method will be called on addEmp.html form submission, handling POST request It also validates the user input
 	 */
-	@PostMapping("insert")
-	public String insert(@Valid AssignVO assignVO, BindingResult result, ModelMap model) throws IOException {
-
-		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-
-		if (result.hasErrors()) {
-			return "back-end/assign/addAssign";
-		}
-		/*************************** 2.開始新增資料 *****************************************/
-		// EmpService assignSvc = new EmpService();
-		assignSvc.addAssign(assignVO);
-		/*************************** 3.新增完成,準備轉交(Send the Success view) **************/
-		List<AssignVO> list = assignSvc.getAll();
-		model.addAttribute("assignListData", list);
-		model.addAttribute("success", "- (新增成功)");
-		return "redirect:/assign/listAllAssign"; // 新增成功後重導至IndexController_inSpringBoot.java的第58行@GetMapping("/emp/listAllEmp")
-	}
-
+	 @PostMapping("/insert")
+	    public String insertAssignments(@RequestParam List<String> dates, 
+	                                    @RequestParam List<String> employees, 
+	                                    RedirectAttributes redirectAttributes) {
+	        // 假設 dates 和 employees 的順序一致
+	        for (int i = 0; i < dates.size(); i++) {
+	            String date = dates.get(i);
+	            String employeeId = employees.get(i);
+	            if (!employeeId.isEmpty()) {
+	                // 保存排班信息
+	                // assignmentService.save(new Assignment(date, employeeId));
+	            }
+	        }
+	        
+	        redirectAttributes.addFlashAttribute("message", "排班保存成功");
+	        
+	        return "redirect:/assign/listAllAssign";
+		 }
+	
 	/*
 	 * This method will be called on listAllEmp.html form submission, handling POST request
 	 */

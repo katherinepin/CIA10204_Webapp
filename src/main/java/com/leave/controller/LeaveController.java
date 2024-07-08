@@ -36,7 +36,7 @@ public class LeaveController {
 	EmpService empSvc;
 
 	/*
-	 * This method will serve as addEmp.html handler.
+	 * This method will serve as addEmp.html handler
 	 */
 	@GetMapping("addLeave")
 	public String addLeave(ModelMap model) {

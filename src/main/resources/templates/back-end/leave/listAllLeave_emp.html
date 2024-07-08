@@ -57,7 +57,7 @@ body {
 						        <th>代班員工</th>
 						        <th>核准日期</th>
 						        <th>核准狀態</th>
-						        <th>送出</th>
+
 							</tr>
 				  		</thead>
 				  		<tbody>
@@ -69,17 +69,8 @@ body {
 										<td th:text="${leaveVO.leaveDate}" th:value="${leaveVO.leaveDate}"></td>
 										<td th:text="${leaveVO.leaveAssigneeId.empName}"></td>
 										<td th:text="${leaveVO.leaveApprovaldate}"></td>
-										<td>		
-											<select name="leaveStatus">
-							        		  <option th:value="0" th:selected="${leaveVO.leaveStatus == 0}" selected>未審核</option>
-	                           				  <option th:value="1" th:selected="${leaveVO.leaveStatus == 1}">審核通過</option>
-	                            			  <option th:value="2" th:selected="${leaveVO.leaveStatus == 2}">審核不通過</option>
-								        	</select>
-										</td>
-										<td>
-											    <input class="submit" type="submit" value="送出">
-											    <input type="hidden" name="leaveId" th:value="${leaveVO.leaveId}">									    
-										</td>
+										<td class=status th:if="${leaveVO.leaveStatus == 0}" th:text="'等待審核'"></td>
+										
 										
 									</tr>
 								</th:block>

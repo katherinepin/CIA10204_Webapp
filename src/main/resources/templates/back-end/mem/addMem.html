@@ -12,9 +12,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>員工資料新增 - addEmp.html</title>
+<title>會員資料新增 - addMem.html</title>
 
-<head th:insert="~{/back-end/emp/included-fragment}"></head>
+<head th:insert="~{/back-end/mem/included-fragment}"></head>
 <style type="text/css">
 	
 	button {
@@ -47,13 +47,13 @@
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
-		 <div align="center"> <h2>員工資料新增 - addEmp.html</h2>
-		 <h3><a class="navbar-brand" th:href="@{/back-end/emp/listAllEmp}"><img th:src="@{/images/back1.gif}">回查詢頁</a></h3></div>
+		 <div align="center"> <h2>會員資料新增 - addMem.html</h2>
+		 <h3><a class="navbar-brand" th:href="@{/back-end/mem/listAllMem}"><img th:src="@{/images/back1.gif}">回查詢頁</a></h3></div>
 </nav>
 
 	<div align="center">
 		<h3><b>所有欄位皆為必填欄位</b></h3>
-		<form th:action="@{insert}" method="post" th:object="${empVO}" enctype="multipart/form-data">
+		<form th:action="@{insert}" method="post" th:object="${memVO}" enctype="multipart/form-data">
 			
 			
 			
@@ -61,46 +61,66 @@
 			
 			
 			<div>
-			<label>員工姓名:</label>
-			<input type="text" th:field="*{empName}" onclick="hideContent('empName.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('empName')}" th:errors="*{empName}" class="error" id="empName.errors"></span>
+			<label>會員姓名:</label>
+			<input type="text" th:field="*{memName}" onclick="hideContent('memName.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('memName')}" th:errors="*{memName}" class="error" id="memName.errors"></span>
 			</div>
 			
 			<div>
-			<label>員工帳號:</label>
-			<input type="text" th:field="*{empAccount}" onclick="hideContent('empAccount.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('empAccount')}" th:errors="*{empAccount}" class="error" id="empAccount.errors"></span>
+			<label>會員帳號:</label>
+			<input type="text" th:field="*{memEmail}" onclick="hideContent('memEmail.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('memEmail')}" th:errors="*{memEmail}" class="error" id="memEmail.errors"></span>
 			</div>
 			
 			<div>
-			<label>員工密碼:</label>
-			<input type="text" th:field="*{empPassword}" onclick="hideContent('empPassword.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('empPassword')}" th:errors="*{empPassword}" class="error" id="empPassword.errors"></span>
+			<label>會員密碼:</label>
+			<input type="text" th:field="*{memPassword}" onclick="hideContent('memPassword.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('memPassword')}" th:errors="*{memPassword}" class="error" id="memPassword.errors"></span>
+			</div>
+			
+		
+			
+			<div>
+			<label>會員地址:</label>
+			<input type="text" th:field="*{memAddress}" onclick="hideContent('memAddress.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('memAddress')}" th:errors="*{memAddress}" class="error" id="memAddress.errors"></span>
 			</div>
 			
 			<div>
-			<label>員工email:</label>
-			<input type="text" th:field="*{empEmail}" onclick="hideContent('empEmail.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('empEmail')}" th:errors="*{empEmail}" class="error" id="empEmail.errors"></span>
+			<label>會員電話:</label>
+			<input type="text" th:field="*{memPhone}" onclick="hideContent('memPhone.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('memPhone')}" th:errors="*{memPhone}" class="error" id="memPhone.errors"></span>
 			</div>
 			
 			<div>
-			<label>員工地址:</label>
-			<input type="text" th:field="*{empAddress}" onclick="hideContent('empAddress.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('empAddress')}" th:errors="*{empAddress}" class="error" id="empAddress.errors"></span>
+			<label>會員身分證:</label>
+			<input type="text" th:field="*{memUid}" onclick="hideContent('memPhone.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('memUid')}" th:errors="*{memUid}" class="error" id="memUid.errors"></span>
 			</div>
 			
-			<div>
-			<label>員工電話:</label>
-			<input type="text" th:field="*{empPhone}" onclick="hideContent('empPhone.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('empPhone')}" th:errors="*{empPhone}" class="error" id="empPhone.errors"></span>
-			</div>
+			
+			
+			
 			
 			<div>
-			<label>雇用日期:</label>
-			<input type="date" th:field="*{empHiredate}" onclick="hideContent('empHiredate.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('empHiredate')}" th:errors="*{empHiredate}" class="error" id="empHiredate.errors"></span>
+				<label>會員性別:</label> <select th:field="*{memSex}"
+					onclick="hideContent('memSex.errors');">
+					<option value="M" th:selected="${memSex == 'M'}">男</option>
+					<option value="F" th:selected="${memSex == 'F'}">女</option>
+				</select> <br /> <span th:if="${#fields.hasErrors('memSex')}"
+					th:errors="*{memSex}" class="error" id="memSex.errors"></span>
 			</div>
+			
+			
+			
+			
+			<div>
+			<label>會員生日:</label>
+			<input type="date" th:field="*{memDob}" onclick="hideContent('memPhone.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('memDob')}" th:errors="*{memDob}" class="error" id="memDob.errors"></span>
+			</div>
+			
+			
 			
 				<div>
 			<label>照片:</label>
@@ -178,6 +198,8 @@ function previewfile(file) {
 	}
 }
 </script>   
+
+
 
 </body>
 </html>

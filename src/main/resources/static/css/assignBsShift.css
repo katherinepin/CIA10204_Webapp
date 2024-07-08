@@ -1,0 +1,98 @@
+*{box-sizing: border-box;}
+body, button{font-family: '微軟正黑體','Calibri';  
+    font-weight:bold; color:#091e2696}
+
+
+.clsTable { 
+    font-size: 1.0rem; 
+    border: 1px solid #091e2641;
+
+    
+}
+.clsRow { 
+    display: table-row; 
+    border: 1px solid #091e2641;
+
+}
+/*名字欄位*/
+.clsCol:not(:first-child):hover {
+    background-color: #5f7cfd;cursor:pointer; 
+    color:#ffffff
+}
+
+.clsHead, .clsWeek { 
+    display: table-cell; vertical-align: 
+    top; text-align: center; 
+    padding: 10px 20px;
+    border: 1px solid #091e2616;
+    min-width: 120px;
+}
+
+.clsCol{
+    height: 50px;
+    width: 120px;
+}
+
+/*姓名*/
+.clsHead:first-child{ 
+    background-color:#091e2622;
+}
+.clsCol{ 
+    display: table-cell; 
+    vertical-align:middle ; 
+    text-align: center; 
+    font-size:  1.0rem;
+    color: #091e26b0;
+    border: 1px solid #091e2616;
+    
+
+}
+/* table捲軸*/
+.clsTable::-webkit-scrollbar{
+    height: 10px;
+    width: 12px;
+    background-color: transparent;
+}
+  .clsTable::-webkit-scrollbar-thumb{
+    background-color: #66666665;
+    border-radius: 10px;
+    border: 3px solid #fff;
+}
+
+
+.clsHead, .clsWeek { 
+    background-color: #ffffff; ;
+
+
+}
+
+/*假日表顏色*/
+.clsHoliday{background-color: #d142b21f; color: #091e2696; }
+.IsHLD{color: #fd0404;}
+.bsButton{ padding: 5px 10px; display: inline-block; vertical-align: middle; overflow: hidden; text-decoration: none; text-align: center; cursor: pointer; white-space: nowrap;}
+.bsBoderRed{ background-color:lightblue ;border:1px; border-radius: 8px;}
+.bsButton:hover{ background-color: antiquewhite;}
+.bsLarge{font-size: 1.25rem;margin: 6px;vertical-align:middle ;}
+.tooltip{ position: relative; color:red;}
+.tooltip::before { content: attr(data-tooltip); background: #d9444a; color: #fff; padding: .35em .5em; right: 50%; top: -90%; margin-right: 4px; white-space: pre; border-radius: 5px; }
+.tooltip::after { content: ""; right: 60%; top: 12%; border-width: 6px; border-style: solid; border-color: #f1ee3c  transparent transparent transparent; }
+.tooltip::after,.tooltip::before { visibility: hidden; position: absolute; opacity: 0; transition: opacity 0.5s; }
+.tooltip:hover:after,.tooltip:hover:before { visibility: visible; opacity: 1;}
+.tooltip:hover{cursor:grab;}
+.radioSet{display: inline-block;}
+
+
+#container {
+
+    width: 950px;
+    height: 210px;
+    overflow: auto; /* 允许滚动 */
+    border: 1px solid #091e2622; /* 可选的边框，用于视觉效果 */
+    margin-left: 15px;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px;
+}
+    
+
+

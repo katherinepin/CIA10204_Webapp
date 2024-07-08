@@ -71,7 +71,7 @@ body {
 
 }
 
-.btn_yes {
+.submit {
     background-color: #1a79c4;
     color: white;
     border: none;
@@ -110,7 +110,7 @@ body {
 }
 
 
-.btn_yes:hover, .btn_confirm:hover {
+.submit:hover, .btn_confirm:hover {
     background-color: #0056b3;
 }
 
@@ -121,6 +121,7 @@ body {
 .schedule-table {
     width: 100%;
     border-collapse: collapse;
+    font-size: 1.0rem;
 }
 
 .schedule-table th, .schedule-table td {

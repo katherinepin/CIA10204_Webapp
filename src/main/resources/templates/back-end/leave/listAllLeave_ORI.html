@@ -104,7 +104,7 @@ body {
 				<td>
 				  <form method="post" th:action="@{/leave/getOne_For_Update}" style="margin-bottom: 0px;">
 				     <input type="submit" value="修改">
-				     <input type="hidden" name="leave	Id" th:value="${leaveVO.leaveId}"></form>
+				     <input type="hidden" name="leaveId" th:value="${leaveVO.leaveId}"></form>
 				
 				</td>
 				<td>
@@ -136,7 +136,7 @@ function toggleCheckboxes(source) {
         checkboxes[i].checked = source.checked;
     }
 }
-<script src="scripts.js"></script>
+
 </script>
 </body>
 </html>
