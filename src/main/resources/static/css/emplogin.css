@@ -1,6 +1,6 @@
 .right-pane {
-  width: 80%; /* 调整頁面的寬度 */
-  background:url('https://cdn.discordapp.com/attachments/1252923618137215030/1256868274407215174/cannedgoods_Jupiters_atmosphere_fried_egg_crystalline_carapace__801e0759-c2d1-4a51-8568-c61841fd7dd1.png?ex=6682554c&is=668103cc&hm=de1c6aaf082e73a90a9ff0909ed13baf5608ce0d884a6693d72ab0b992938c60&');
+  width: 80%; /* 調整頁面的寬度 */
+  background: url(../images/1.png) no-repeat center;
 }
 body {
   

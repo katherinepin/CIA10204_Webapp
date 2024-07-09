@@ -33,13 +33,14 @@ public class AssignController {
 	EmpService empSvc;
 
 	/*
-	 * This method will serve as addEmp.html handler
+	 * This method will serve as addEmp.html handler.
 	 */
 	@GetMapping("addAssign")
 	public String addAssign(ModelMap model) {
 		AssignVO assignVO = new AssignVO();
 	    List<EmpVO> List = empSvc.getAll(); // 確保這裡正確取得所有員工
 		model.addAttribute("assignVO", assignVO);
+		
 	    model.addAttribute("empListData", List); // 傳遞到前端模板
 		return "back-end/assign/addAssign";
 	}

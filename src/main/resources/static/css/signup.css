@@ -14,7 +14,8 @@ html, body {
 
 body {
   font-family: "Fira Sans", sans-serif;
-  background-image: url(https://cdn.discordapp.com/attachments/1008571124440911943/1231954235860582420/designers.duck_cartoon_meme_mascots_minion_with_money_b4af04ae-4709-4ed7-8d7c-d4e7b31f2a81.png?ex=667ac0ca&is=66796f4a&hm=141cbae5591a6633302a1bd069c39047f456012bf6d9075b9f8456d24efe1f09&);
+ 
+  background: url(../images/3.png);
   background-size: cover;
   background-position: left tom;
   background-repeat: no-repeat;

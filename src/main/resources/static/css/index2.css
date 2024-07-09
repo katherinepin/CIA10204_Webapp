@@ -64,6 +64,7 @@ button {
   text-align: left;
   white-space: nowrap;
   z-index: 28;
+   cursor: pointer;
 }
 
 
