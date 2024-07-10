@@ -54,7 +54,7 @@ public class LeaveController {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 
 		if (result.hasErrors()) {
-			return "back-end/leave/addLeave";
+			return "back-end/leave/listAllLeave";
 		}
 		/*************************** 2.開始新增資料 *****************************************/
 		// EmpService assignSvc = new EmpService();

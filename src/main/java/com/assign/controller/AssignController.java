@@ -1,7 +1,12 @@
 package com.assign.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -14,12 +19,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.SqlDateTypeAdapter;
 import com.assign.model.AssignService;
 import com.assign.model.AssignVO;
 import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 
 @Controller
@@ -35,36 +44,30 @@ public class AssignController {
 	/*
 	 * This method will serve as addEmp.html handler
 	 */
-	@GetMapping("addAssign")
+	@GetMapping("/addAssign")
 	public String addAssign(ModelMap model) {
-		AssignVO assignVO = new AssignVO();
-	    List<EmpVO> List = empSvc.getAll(); // 確保這裡正確取得所有員工
-		model.addAttribute("assignVO", assignVO);
-	    model.addAttribute("empListData", List); // 傳遞到前端模板
-		return "back-end/assign/addAssign";
+	    AssignVO assignVO = new AssignVO();
+	    List<EmpVO> List = empSvc.getAll();
+	    model.addAttribute("assignVO", assignVO);
+	    model.addAttribute("empListData", List);
+	    return "back-end/assign/addAssign";
 	}
+
+
 
 	/*
 	 * This method will be called on addEmp.html form submission, handling POST request It also validates the user input
 	 */
-	 @PostMapping("/insert")
-	    public String insertAssignments(@RequestParam List<String> dates, 
-	                                    @RequestParam List<String> employees, 
-	                                    RedirectAttributes redirectAttributes) {
-	        // 假設 dates 和 employees 的順序一致
-	        for (int i = 0; i < dates.size(); i++) {
-	            String date = dates.get(i);
-	            String employeeId = employees.get(i);
-	            if (!employeeId.isEmpty()) {
-	                // 保存排班信息
-	                // assignmentService.save(new Assignment(date, employeeId));
-	            }
-	        }
-	        
-	        redirectAttributes.addFlashAttribute("message", "排班保存成功");
-	        
-	        return "redirect:/assign/listAllAssign";
-		 }
+	@PostMapping("insert")
+	@ResponseBody
+	public Map<String, String> insertAssignments(@RequestParam List<String> dates, 
+	                                @RequestParam List<String> employees) {
+	    // 保存排班邏輯...
+
+	    Map<String, String> response = new HashMap<>();
+	    response.put("message", "排班保存成功");
+	    return response;
+	}
 	
 	/*
 	 * This method will be called on listAllEmp.html form submission, handling POST request
@@ -131,6 +134,27 @@ public class AssignController {
 		List<EmpVO> list = empSvc.getAll();
 		return list;
 	}
+	
+	@PostMapping("/insertMonthly")
+	public String insertMonthlyAssignments(@RequestParam String month, 
+	                                       @RequestParam List<Integer> employeeIds,
+	                                       RedirectAttributes redirectAttributes) {
+	    LocalDate start = LocalDate.parse(month + "-01");
+	    LocalDate end = start.with(TemporalAdjusters.lastDayOfMonth());
+	    
+	    List<LocalDate> allDates = start.datesUntil(end.plusDays(1)).collect(Collectors.toList());
+	    
+	    for (int i = 0; i < allDates.size(); i++) {
+	        LocalDate date = allDates.get(i);
+	        Integer empId = employeeIds.get(i);
+	        // Save the assignment
+	        assignSvc.addAssign(new AssignVO());
+	    }
+	    
+	    redirectAttributes.addFlashAttribute("message", "Monthly schedule saved successfully!");
+	    return "redirect:/assign/monthAssign";
+	}
+
 
 	/*
 	 * 【 第二種作法 】 Method used to populate the Map Data in view. 如 : 

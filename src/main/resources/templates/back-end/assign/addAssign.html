@@ -1,143 +1,129 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>排班系统</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+    <title>每月排班編輯工具</title>
+    <link rel="stylesheet" href="/css/assign.css">
 </head>
 <body>
-    <h1>排班系统</h1>
-    
-    <div>
-        <label for="month">选择月份:</label>
-        <input type="month" id="month" name="month">
-        <button id="generateScheduleBtn">生成排班</button>
+    <div class="container">
+        <h1>每月排班編輯工具</h1>
+        <div class="month-selector">
+            <select id="yearSelect"></select>
+            <select id="monthSelect"></select>
+        </div>
+        <form id="assignForm" th:action="@{/assign/insert}" method="post">
+            <div id="calendar"></div>
+            <button type="submit">保存排班</button>
+        </form>
     </div>
 
-    <button id="batchSaveAssignmentBtn">批量保存</button>
-
-    <table id="scheduleTable">
-        <thead>
-            <tr>
-                <th>选择</th>
-                <th>日期</th>
-                <th>员工</th>
-            </tr>
-        </thead>
-        <tbody id="scheduleBody">
-        </tbody>
-    </table>
-
-    <form id="batchSaveForm" th:action="@{/insert}" method="post">
-        <input type="hidden" name="assignments" id="assignmentsInput">
-    </form>
-
     <script>
-        // 从Thymeleaf获取员工列表数据，并将其解析为JavaScript对象
-        var empListData = /*[[${empListData}]]*/ '[]';
-        empListData = JSON.parse(empListData);
-        console.log(empListData);
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/emp/api/employees')
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Received data:", data);
+                    initializeCalendar(data);
+                })
+                .catch(error => console.error('Error loading the employees:', error));
 
-        // 添加事件监听器到按钮
-        document.getElementById('generateScheduleBtn').addEventListener('click', generateSchedule);
-        document.getElementById('batchSaveAssignmentBtn').addEventListener('click', batchSaveAssignment);
+            function initializeCalendar(data) {
+                const calendar = document.getElementById('calendar');
+                const form = document.getElementById('assignForm');
+                const yearSelect = document.getElementById('yearSelect');
+                const monthSelect = document.getElementById('monthSelect');
 
-        // 生成排班表函数
-        function generateSchedule() {
-            const month = document.getElementById('month').value;
-            if (!month) {
-                alert('请选择月份');
-                return;
-            }
-            const [year, monthNum] = month.split('-');
-            const daysInMonth = new Date(year, monthNum, 0).getDate();
+                // 初始化年份選擇
+                const currentYear = new Date().getFullYear();
+                for (let year = currentYear - 1; year <= currentYear + 1; year++) {
+                    const option = document.createElement('option');
+                    option.value = year;
+                    option.textContent = year;
+                    yearSelect.appendChild(option);
+                }
+                yearSelect.value = currentYear;
 
-            const scheduleBody = document.getElementById('scheduleBody');
-            scheduleBody.innerHTML = '';
+                // 初始化月份選擇
+                for (let month = 1; month <= 12; month++) {
+                    const option = document.createElement('option');
+                    option.value = month;
+                    option.textContent = month + '月';
+                    monthSelect.appendChild(option);
+                }
+                monthSelect.value = new Date().getMonth() + 1;
 
-            for (let day = 1; day <= daysInMonth; day++) {
-                const row = document.createElement('tr');
-                const date = `${year}-${monthNum}-${day.toString().padStart(2, '0')}`;
-                
-                row.innerHTML = `
-                    <td><input type="checkbox" name="select_${date}"></td>
-                    <td>${date}</td>
-                    <td>
-                        <select name="employee_${date}">
-                            <option value="">选择员工</option>
-                            ${empListData.map(emp => `<option value="${emp.empId}">${emp.empName}</option>`).join('')}
-                        </select>
-                    </td>
-                `;
-                
-                scheduleBody.appendChild(row);
-            }
-        }
+                // 創建日曆
+                function createCalendar(year, month) {
+                    calendar.innerHTML = ''; // 清空現有日曆
+                    const daysInMonth = new Date(year, month, 0).getDate();
+                    const firstDay = new Date(year, month - 1, 1).getDay();
+                    const dayNames = ['日', '一', '二', '三', '四', '五', '六'];
 
-        // 批量保存排班函数
-        async function batchSaveAssignment() {
-            const scheduleBody = document.getElementById('scheduleBody');
-            const rows = scheduleBody.querySelectorAll('tr');
-            const assignments = [];
+                    // 添加星期幾的標題
+                    dayNames.forEach(day => {
+                        const dayHeader = document.createElement('div');
+                        dayHeader.className = 'day day-header';
+                        dayHeader.textContent = day;
+                        calendar.appendChild(dayHeader);
+                    });
 
-            rows.forEach(row => {
-                const checkbox = row.querySelector('input[type="checkbox"]');
-                if (checkbox && checkbox.checked) {
-                    const date = row.cells[1].innerText;
-                    const employeeSelect = row.querySelector(`select[name="employee_${date}"]`);
-                    const employeeId = employeeSelect.value;
-                    
-                    if (!employeeId) {
-                        alert(`请为 ${date} 选择员工`);
-                        return;
+                    // 添加空白日期
+                    for (let i = 0; i < firstDay; i++) {
+                        const emptyDay = document.createElement('div');
+                        emptyDay.className = 'day empty';
+                        calendar.appendChild(emptyDay);
                     }
 
-                    assignments.push({
-                        assignDate: date,
-                        empId: employeeId
-                    });
+                    // 添加每一天的單元格
+                    for (let i = 1; i <= daysInMonth; i++) {
+                        const dayCell = document.createElement('div');
+                        dayCell.className = 'day';
+                        dayCell.innerHTML = `
+                            <div>${i}</div>
+                            <select name="employees">
+                                <option value="">選擇員工</option>
+                                ${data.employees.map(emp => `<option value="${emp.empId}">${emp.empName}</option>`).join('')}
+                            </select>
+                            <input type="hidden" name="dates" value="${year}-${month.toString().padStart(2, '0')}-${i.toString().padStart(2, '0')}">
+                        `;
+                        calendar.appendChild(dayCell);
+                    }
                 }
-            });
 
-            if (assignments.length > 0) {
-                console.log(`正在保存分配:`, assignments);
-                try {
-                    const response = await fetch('/insert', {
+                // 初始創建日曆
+                createCalendar(currentYear, new Date().getMonth() + 1);
+
+                // 當年份或月份改變時重新創建日曆
+                yearSelect.addEventListener('change', updateCalendar);
+                monthSelect.addEventListener('change', updateCalendar);
+
+                function updateCalendar() {
+                    const selectedYear = parseInt(yearSelect.value);
+                    const selectedMonth = parseInt(monthSelect.value);
+                    createCalendar(selectedYear, selectedMonth);
+                }
+
+                // 表單提交
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const formData = new FormData(form);
+                    fetch(form.action, {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(assignments)
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert('排班保存成功');
+                        // 可以在這裡添加更多的成功後的操作
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('保存失敗，請重試');
                     });
-
-                    if (response.ok) {
-                        alert('分配保存成功');
-                        window.location.href = '/assign/listAllAssign';
-                    } else {
-                        alert('保存分配失败');
-                    }
-                } catch (error) {
-                    console.error('保存分配时出错:', error);
-                    alert('保存分配时出错');
-                }
-            } else {
-                alert('未选择任何分配');
+                });
             }
-        }
+        });
     </script>
 </body>
 </html>

@@ -1,27 +1,25 @@
 package com.emp.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.validation.Valid;
-import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import com.emp.model.EmpVO;
 import com.emp.model.EmpService;
+import com.emp.model.EmpVO;
 
 @Controller
 @RequestMapping("/emp")
@@ -30,7 +28,15 @@ public class EmpController {
 	@Autowired
 	EmpService empSvc;
 
-
+	
+    @GetMapping("/api/employees")
+    @ResponseBody
+    public Map<String, List<EmpVO>> getEmployees() {
+        List<EmpVO> employees = empSvc.getAll();
+        Map<String, List<EmpVO>> response = new HashMap<>();
+        response.put("employees", employees);
+        return response;
+    }
 	/*
 	 * This method will serve as addEmp.html handler.
 	 */
@@ -40,6 +46,8 @@ public class EmpController {
 		model.addAttribute("empVO", empVO);
 		return "back-end/emp/addEmp";
 	}
+	
+
 
 	/*
 	 * This method will be called on addEmp.html form submission, handling POST request It also validates the user input
