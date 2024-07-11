@@ -8,6 +8,7 @@
 <body>
     <div class="container">
         <h1>每月排班編輯工具</h1>
+        
         <div class="month-selector">
             <select id="yearSelect"></select>
             <select id="monthSelect"></select>
@@ -20,7 +21,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            fetch('/emp/api/employees')
+            fetch('/assign/api/employees')
                 .then(response => response.json())
                 .then(data => {
                     console.log("Received data:", data);
@@ -80,12 +81,11 @@
                         const dayCell = document.createElement('div');
                         dayCell.className = 'day';
                         dayCell.innerHTML = `
-                            <div>${i}</div>
-                            <select name="employees">
-                                <option value="">選擇員工</option>
-                                ${data.employees.map(emp => `<option value="${emp.empId}">${emp.empName}</option>`).join('')}
-                            </select>
-                            <input type="hidden" name="dates" value="${year}-${month.toString().padStart(2, '0')}-${i.toString().padStart(2, '0')}">
+                        <select name="employees[]" required>
+                            <option value="">選擇員工</option>
+                            ${data.employees.map(emp => `<option value="${emp.empId}">${emp.empName}</option>`).join('')}
+                        </select>
+                        <input type="hidden" name="dates[]" value="${year}-${month.toString().padStart(2, '0')}-${i.toString().padStart(2, '0')}">
                         `;
                         calendar.appendChild(dayCell);
                     }
@@ -112,10 +112,15 @@
                         method: 'POST',
                         body: formData
                     })
-                    .then(response => response.json())
+                    .then(response => response.json())  // 確保解析返回的JSON
                     .then(data => {
-                        alert('排班保存成功');
-                        // 可以在這裡添加更多的成功後的操作
+                        if (data.message) {
+                            alert(data.message);
+                        }
+                        if (data.error) {
+                            alert(data.error);
+                        }
+                        // 可以在這裡添加更多的成功後或錯誤處理的操作
                     })
                     .catch(error => {
                         console.error('Error:', error);

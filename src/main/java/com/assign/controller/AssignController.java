@@ -1,16 +1,16 @@
 package com.assign.controller;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -22,13 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.SqlDateTypeAdapter;
 import com.assign.model.AssignService;
 import com.assign.model.AssignVO;
 import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 
 @Controller
@@ -40,6 +37,15 @@ public class AssignController {
 
 	@Autowired
 	EmpService empSvc;
+	
+    @GetMapping("/api/employees")
+    @ResponseBody
+    public Map<String, List<EmpVO>> getEmployees() {
+        List<EmpVO> employees = empSvc.getAll();
+        Map<String, List<EmpVO>> response = new HashMap<>();
+        response.put("employees", employees);
+        return response;
+    }
 
 	/*
 	 * This method will serve as addEmp.html handler
@@ -53,21 +59,57 @@ public class AssignController {
 	    return "back-end/assign/addAssign";
 	}
 
-
+	@PostMapping("/insertMonthly")
+	public String insertMonthlyAssignments(@RequestParam("month") String month,
+	                                       @RequestParam List<Integer> employees,
+	                                       @RequestParam List<String> dates,
+	                                       RedirectAttributes redirectAttributes) {
+	    try {
+	        for (int i = 0; i < dates.size(); i++) {
+	            AssignVO assign = new AssignVO();
+	            assign.setAssignDate(Date.valueOf(dates.get(i)));
+	            EmpVO emp = new EmpVO();
+	            emp.setEmpId(employees.get(i));
+	            assign.setEmpVO(emp);
+	            assignSvc.addAssign(assign);
+	        }
+	        redirectAttributes.addFlashAttribute("message", "Monthly schedule saved successfully!");
+	    } catch (Exception e) {
+	        redirectAttributes.addFlashAttribute("error", "There was an error saving the schedule: " + e.getMessage());
+	    }
+	    return "redirect:/assign/listAllAssign";
+	}
 
 	/*
 	 * This method will be called on addEmp.html form submission, handling POST request It also validates the user input
+	 
 	 */
-	@PostMapping("insert")
+	
+	
+	@PostMapping("/insert")
 	@ResponseBody
-	public Map<String, String> insertAssignments(@RequestParam List<String> dates, 
-	                                @RequestParam List<String> employees) {
-	    // 保存排班邏輯...
-
+	public ResponseEntity<Map<String, String>> insertAssignments(@RequestParam("dates[]") List<String> dates, 
+	                                                             @RequestParam("employees[]") List<Integer> employees) {
 	    Map<String, String> response = new HashMap<>();
-	    response.put("message", "排班保存成功");
-	    return response;
+	    try {
+	        // 這裡加上你的業務邏輯，如創建AssignVO對象並設置屬性
+	        for (int i = 0; i < dates.size(); i++) {
+	            AssignVO assignVO = new AssignVO();
+	            assignVO.setAssignDate(Date.valueOf(dates.get(i)));  // 轉換日期格式
+	            EmpVO empVO = new EmpVO();
+	            empVO.setEmpId(employees.get(i));
+	            assignVO.setEmpVO(empVO);
+	            assignSvc.addAssign(assignVO);
+	        }
+	        response.put("message", "排班保存成功");
+	        return ResponseEntity.ok(response);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        response.put("error", "保存失敗：" + e.getMessage());
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+	    }
 	}
+	
 	
 	/*
 	 * This method will be called on listAllEmp.html form submission, handling POST request
@@ -135,25 +177,7 @@ public class AssignController {
 		return list;
 	}
 	
-	@PostMapping("/insertMonthly")
-	public String insertMonthlyAssignments(@RequestParam String month, 
-	                                       @RequestParam List<Integer> employeeIds,
-	                                       RedirectAttributes redirectAttributes) {
-	    LocalDate start = LocalDate.parse(month + "-01");
-	    LocalDate end = start.with(TemporalAdjusters.lastDayOfMonth());
-	    
-	    List<LocalDate> allDates = start.datesUntil(end.plusDays(1)).collect(Collectors.toList());
-	    
-	    for (int i = 0; i < allDates.size(); i++) {
-	        LocalDate date = allDates.get(i);
-	        Integer empId = employeeIds.get(i);
-	        // Save the assignment
-	        assignSvc.addAssign(new AssignVO());
-	    }
-	    
-	    redirectAttributes.addFlashAttribute("message", "Monthly schedule saved successfully!");
-	    return "redirect:/assign/monthAssign";
-	}
+
 
 
 	/*
