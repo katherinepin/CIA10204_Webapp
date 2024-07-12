@@ -2,14 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>每月排班編輯工具</title>
+    <title>每月排班編輯</title>
     <link rel="stylesheet" href="/css/assign.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <style>
+
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>每月排班編輯工具</h1>
+        <h1>MorningCode 員工排班</h1>
         
         <div class="month-selector">
             <select id="yearSelect"></select>
@@ -17,9 +20,11 @@
         </div>
         <form id="assignForm" method="post">
             <div id="calendar"></div>
-            <button type="submit" id="saveButton">保存排班</button>
         </form>
-        <button id="editButton" style="margin-top: 10px;">修改排班</button>
+
+        <button type="button" id="editButton" class="btn edit" style="margin: 10px 10px;">編輯排班</button>
+        <button id="saveButton" class="btn save" style="margin-top: 10px;">送出排班</button>
+		
     </div>
 
     <script>
@@ -30,7 +35,7 @@
                 .then(response => response.json())
                 .then(data => {
                     console.log("Received employee data:", data);
-                    employeeData = data; // 将员工数据保存在全局变量中
+                    employeeData = data; // 將員工數據保存在全質變量中
                     initializeYearAndMonthSelectors();
                     fetchMonthlyAssignments(new Date().getFullYear(), new Date().getMonth() + 1);
                 })
@@ -44,7 +49,7 @@
                 for (let year = currentYear - 10; year <= currentYear; year++) {
                     const option = document.createElement('option');
                     option.value = year;
-                    option.textContent = year;
+                    option.textContent = year + '年';
                     yearSelect.appendChild(option);
                 }
                 yearSelect.value = currentYear;
@@ -55,7 +60,7 @@
                     option.textContent = month + '月';
                     monthSelect.appendChild(option);
                 }
-                monthSelect.value = new Date().getMonth() + 1;
+                monthSelect.value = new Date().getMonth() + 2;
 
                 yearSelect.addEventListener('change', updateCalendar);
                 monthSelect.addEventListener('change', updateCalendar);
@@ -64,13 +69,13 @@
             function fetchMonthlyAssignments(year, month) {
                 console.log(`Fetching assignments for ${year}-${month}`);
                 fetch(`/assign/api/getMonthlyAssign?year=${year}&month=${month}`)
-                    .then(response => response.text()) // 先解析为文本
+                    .then(response => response.text()) // 先解析成文本
                     .then(text => {
                         try {
-                            const assignments = JSON.parse(text); // 尝试解析为JSON
+                            const assignments = JSON.parse(text); // 嘗試解析成JSON
                             console.log("Received assignment data:", assignments);
                             initializeCalendar(employeeData, assignments);
-                            // 如果有抓到数据，禁用保存按钮
+                            // 如果有資料, 禁用保存按鈕
                             const saveButton = document.getElementById('saveButton');
                             const editButton = document.getElementById('editButton');
                             if (assignments.length > 0) {
@@ -88,13 +93,13 @@
                             }
                         } catch (e) {
                             console.error('Error parsing JSON:', e);
-                            console.error('Response text:', text); // 打印响应文本以进行调试
-                            initializeCalendar(employeeData, []); // 如果解析失败，显示空的日历
+                            console.error('Response text:', text); 
+                            initializeCalendar(employeeData, []); // 如果解析失敗，顯是空的日曆
                         }
                     })
                     .catch(error => {
                         console.error('Error loading the assignments:', error);
-                        initializeCalendar(employeeData, []); // 如果出错，显示空的日历
+                        initializeCalendar(employeeData, []); // 如果出錯，顯示空的日曆
                     });
             }
 
@@ -107,7 +112,7 @@
                 }
 
                 const calendar = document.getElementById('calendar');
-                calendar.innerHTML = ''; // 清空现有日历
+                calendar.innerHTML = ''; // 清空現有日曆
 
                 const yearSelect = document.getElementById('yearSelect');
                 const monthSelect = document.getElementById('monthSelect');
@@ -119,7 +124,7 @@
                 const firstDay = new Date(year, month - 1, 1).getDay();
                 const dayNames = ['日', '一', '二', '三', '四', '五', '六'];
 
-                // 添加星期几的标题
+                // 新增星期幾的標題
                 dayNames.forEach(day => {
                     const dayHeader = document.createElement('div');
                     dayHeader.className = 'day day-header';
@@ -127,14 +132,14 @@
                     calendar.appendChild(dayHeader);
                 });
 
-                // 添加空白日期
+                // 新增空白日期
                 for (let i = 0; i < firstDay; i++) {
                     const emptyDay = document.createElement('div');
                     emptyDay.className = 'day empty';
                     calendar.appendChild(emptyDay);
                 }
 
-                // 添加每一天的单元格
+                // 新增每一天的格子
                 for (let i = 1; i <= daysInMonth; i++) {
                     const dateStr = `${year}-${month.toString().padStart(2, '0')}-${i.toString().padStart(2, '0')}`;
                     const assignment = assignments.find(a => a.assignDate === dateStr);
@@ -162,11 +167,23 @@
                 fetchMonthlyAssignments(selectedYear, selectedMonth);
             }
 
-            // 表单提交
-            document.getElementById('assignForm').addEventListener('submit', function(e) {
+            // 表單送出
+            document.getElementById('saveButton').addEventListener('click', function(e) {
                 e.preventDefault();
-                const formData = new FormData(e.target);
-                fetch(e.target.action, {
+                const form = document.getElementById('assignForm');
+                const selects = form.querySelectorAll('select[name="employees[]"]');
+                let allSelected = true;
+                selects.forEach(select => {
+                    if (!select.value) {
+                        allSelected = false;
+                    }
+                });
+                if (!allSelected) {
+                    alert('所有日期必須選擇員工');
+                    return;
+                }
+                const formData = new FormData(form);
+                fetch(form.action, {
                     method: 'POST',
                     body: formData
                 })
@@ -192,7 +209,7 @@
                 });
             });
 
-            // 修改排班
+            // 編輯排班
             document.getElementById('editButton').addEventListener('click', function() {
                 const selects = document.querySelectorAll('#calendar select');
                 selects.forEach(select => {
@@ -206,5 +223,6 @@
             });
         });
     </script>
+
 </body>
 </html>
