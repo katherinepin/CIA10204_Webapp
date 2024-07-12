@@ -2,6 +2,7 @@ package com.assign.controller;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assign.model.AssignService;
 import com.assign.model.AssignVO;
@@ -59,26 +59,26 @@ public class AssignController {
 	    return "back-end/assign/addAssign";
 	}
 
-	@PostMapping("/insertMonthly")
-	public String insertMonthlyAssignments(@RequestParam("month") String month,
-	                                       @RequestParam List<Integer> employees,
-	                                       @RequestParam List<String> dates,
-	                                       RedirectAttributes redirectAttributes) {
+	
+	@GetMapping("/api/getMonthlyAssign")
+	@ResponseBody
+	public ResponseEntity<List<Map<String, Object>>> getMonthlyAssign(@RequestParam("year") int year, @RequestParam("month") int month) {
 	    try {
-	        for (int i = 0; i < dates.size(); i++) {
-	            AssignVO assign = new AssignVO();
-	            assign.setAssignDate(Date.valueOf(dates.get(i)));
-	            EmpVO emp = new EmpVO();
-	            emp.setEmpId(employees.get(i));
-	            assign.setEmpVO(emp);
-	            assignSvc.addAssign(assign);
+	        List<AssignVO> monthlyAssigns = assignSvc.getMonthlyAssigns(year, month);
+	        List<Map<String, Object>> response = new ArrayList<>();
+	        for (AssignVO assign : monthlyAssigns) {
+	            Map<String, Object> assignMap = new HashMap<>();
+	            assignMap.put("assignDate", assign.getAssignDate().toString());
+	            assignMap.put("empVO", assign.getEmpVO());
+	            response.add(assignMap);
 	        }
-	        redirectAttributes.addFlashAttribute("message", "Monthly schedule saved successfully!");
+	        return ResponseEntity.ok(response);
 	    } catch (Exception e) {
-	        redirectAttributes.addFlashAttribute("error", "There was an error saving the schedule: " + e.getMessage());
+	        e.printStackTrace();
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ArrayList<>());
 	    }
-	    return "redirect:/assign/listAllAssign";
 	}
+
 
 	/*
 	 * This method will be called on addEmp.html form submission, handling POST request It also validates the user input
@@ -131,24 +131,29 @@ public class AssignController {
 	/*
 	 * This method will be called on update_emp_input.html form submission, handling POST request It also validates the user input
 	 */
-	@PostMapping("update")
-	public String update(@Valid AssignVO assignVO, BindingResult result, ModelMap model) throws IOException {
-//
-//		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-		if (result.hasErrors()) {
-			return "back-end/assign/update_assign_input";
-		}
-//		/*************************** 2.開始修改資料 *****************************************/
-		// EmpService assignSvc = new EmpService();
-		assignSvc.updateAssign(assignVO);
-
-//		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
-		model.addAttribute("success", "- (修改成功)");
-		assignVO = assignSvc.getOneAssign(Integer.valueOf(assignVO.getAssignId()));
-		model.addAttribute("assignVO", assignVO);
-		
-		return "back-end/assign/listOneAssign"; // 修改成功後轉交listOneEmp.html
-	}
+	@PostMapping("/update")
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> updateAssignments(@RequestParam("dates[]") List<String> dates, 
+                                                                 @RequestParam("employees[]") List<Integer> employees) {
+        Map<String, String> response = new HashMap<>();
+        try {
+            for (int i = 0; i < dates.size(); i++) {
+                List<AssignVO> assignVOList = assignSvc.getAssignByDate(Date.valueOf(dates.get(i)));
+                for (AssignVO assignVO : assignVOList) {
+                    EmpVO empVO = new EmpVO();
+                    empVO.setEmpId(employees.get(i));
+                    assignVO.setEmpVO(empVO);
+                    assignSvc.updateAssign(assignVO);
+                }
+            }
+            response.put("message", "排班更新成功");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.put("error", "更新失敗：" + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
 
 	/*
 	 * This method will be called on listAllEmp.html form submission, handling POST request
