@@ -125,12 +125,6 @@ public class LeaveVO {
         
     }
 	
-//      這是改為批次的
-//	    if ("pass".equals(leaveStatus)) {
-//	        this.leaveStatus = 1; // 1 表示审批通过
-//	    } else if ("fail".equals(leaveStatus)) {
-//	        this.leaveStatus = 2; // 2 表示审批不通过
-//	    }
 
 	
 }

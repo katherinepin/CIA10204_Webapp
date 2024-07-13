@@ -1,7 +1,6 @@
 package com.leave.controller;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +35,7 @@ public class LeaveController {
 	EmpService empSvc;
 
 	/*
-	 * This method will serve as addEmp.html handler.
+	 * This method will serve as addEmp.html handler
 	 */
 	@GetMapping("addLeave")
 	public String addLeave(ModelMap model) {
@@ -124,18 +123,17 @@ public class LeaveController {
 	}
 	
 	@PostMapping("updateapproval")
-	public String updateApproval(@RequestParam("leaveId") String leaveId,
-            @RequestParam("leaveStatus") String leaveStatus,
+	public String updateApproval(@RequestParam("leaveId") Integer leaveId,
+            @RequestParam("leaveStatus") Byte leaveStatus,
 			ModelMap model) {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 
-		LeaveVO leaveVO = leaveSvc.getOneLeave(Integer.valueOf(leaveId));
+		LeaveVO leaveVO = leaveSvc.getOneLeave(leaveId);
 	    if (leaveVO != null) {
-	    	leaveVO.approveLeave();
-	    	 if ("1".equals(leaveStatus)) {
-	              // 審核通過
-	         } else if ("2".equals(leaveStatus)) {
-	             leaveVO.rejectLeave(); // 審核不通過
+	        if (leaveStatus == 1) {
+	            leaveVO.approveLeave(); // 審核通過
+	        } else if (leaveStatus == 2) {
+	            leaveVO.rejectLeave(); // 審核不通過
 	         }else {
 	        	 return "redirect:/leave/listAllLeave"; 
 	         }

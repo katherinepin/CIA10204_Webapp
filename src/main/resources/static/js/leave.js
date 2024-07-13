@@ -19,9 +19,9 @@ $(document).ready(function(){
 	        selectedIds.push($(this).val());
             $(this).closest("tr").find("td.status").text("審核通過").attr("value", "1");
         });
-        $("#selectedIds").val(selectedIds); // 设置选中的请假记录 ID 到隐藏域
-        $("#batchActionForm").attr("action", "/leave/update"); // 设置表单提交的目标地址
-        $("#batchActionForm").submit(); // 提交表单
+        $("#selectedIds").val(selectedIds); // 設置選重的請假紀錄 ID 到隱藏區域  
+        $("#batchActionForm").attr("action", "/leave/update"); // 設置表單提交的目的位址  
+        $("#batchActionForm").submit(); // 提交表單
 
     });
 
