@@ -1,6 +1,6 @@
 body {
-    font-family: Arial, sans-serif;
-
+    font-family:Arial, sans-serif;
+	
 }
 
 .container {
@@ -23,6 +23,7 @@ body {
 
 .tab-button {
     color: #bebcbc;
+    font-size: 16px;
     font-weight: bold;
     padding: 10px 15px;
     cursor: pointer;
@@ -71,7 +72,7 @@ body {
 
 }
 
-.btn_yes {
+.submit {
     background-color: #1a79c4;
     color: white;
     border: none;
@@ -80,6 +81,7 @@ body {
     cursor: pointer;
     min-width: 90px;
     border-radius: 5px;
+    font-size: 16px;
     font-weight: bold;
 
 }
@@ -97,20 +99,8 @@ body {
 
 }
 
-.btn_confirm {
-    background-color: #1a79c4;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    margin-right: 5px;
-    cursor: pointer;
-    min-width: 90px;
-    border-radius: 5px;
-    font-weight: bold;
-}
 
-
-.btn_yes:hover, .btn_confirm:hover {
+.submit:hover, .btn_confirm:hover {
     background-color: #0056b3;
 }
 

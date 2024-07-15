@@ -124,8 +124,8 @@ public class LeaveController {
 	
 	@PostMapping("updateapproval")
 	public String updateApproval(@RequestParam("leaveId") Integer leaveId,
-            @RequestParam("leaveStatus") Byte leaveStatus,
-			ModelMap model) {
+            					 @RequestParam("leaveStatus") Byte leaveStatus,
+            					 ModelMap model) {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 
 		LeaveVO leaveVO = leaveSvc.getOneLeave(leaveId);
