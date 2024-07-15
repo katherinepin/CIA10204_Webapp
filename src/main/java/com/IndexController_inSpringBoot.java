@@ -85,6 +85,10 @@ public class IndexController_inSpringBoot {
 	public String listAllLeave(Model model) {
 		return "back-end/leave/listAllLeave";
 	}
+    @GetMapping("/leave/listAllLeaveforEmp")
+	public String listAllLeaveforEmp(Model model) {
+		return "back-end/leave/listAllLeaveforEmp";
+	}
     
     @ModelAttribute("leaveListData")  // for select_page.html 第97 109行用 // for listAllEmp.html 第85行用
 	protected List<LeaveVO> referenceListData1(Model model) {

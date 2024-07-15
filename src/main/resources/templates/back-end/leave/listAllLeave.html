@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>所有請假資料 - listAllLeave.html</title>
+<title>MorningCode 請假審核.html</title>
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
@@ -15,11 +15,14 @@
 body {
 	margin: 1rem 12rem 2rem 12rem;
 }
+.dataTables_wrapper .dataTables_filter {
+    margin-bottom: 10px; /* 搜尋框與表格的距離 */
+}
 </style>
 </head>
 <body>
 	<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center"></nav>
-	<div align="center"><h2>所有請假資料</h2></div>
+	<div align="center"><h1>MorningCode 請假審核</h1></div>
     <div class="container">
         <!-- 分頁切換按鈕 -->
         <div class="tabs">
@@ -41,7 +44,7 @@ body {
                                 <th>代班員工</th>
                                 <th>核准日期</th>
                                 <th>核准狀態</th>
-                                <th>送出</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -61,7 +64,7 @@ body {
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="submit" value="送出">
+                                            <input class="submit" type="submit" value="送出">
                                             <input type="hidden" name="leaveId" th:value="${leaveVO.leaveId}">
                                         </td>
                                     </tr>
@@ -173,11 +176,11 @@ body {
         var table = $('.schedule-table').DataTable({
             "order": [[0, "desc"]],
         "language": {
-            "lengthMenu": "每頁顯示 _MENU_ 條記錄",
+            "lengthMenu": "每頁顯示 _MENU_ 筆記錄",
             "zeroRecords": "沒有找到記錄",
             "info": "顯示第 _PAGE_ 頁，共 _PAGES_ 頁",
             "infoEmpty": "無可用記錄",
-            "infoFiltered": "(從 _MAX_ 條記錄中過濾)",
+            "infoFiltered": "(從 _MAX_ 筆記錄中過濾)",
             "search": "搜尋:",
             "paginate": {
                 "first": "第一頁",

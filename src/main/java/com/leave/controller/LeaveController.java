@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,10 +52,11 @@ public class LeaveController {
 	public String insert(@Valid LeaveVO leaveVO, BindingResult result, ModelMap model) throws IOException {
 
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+		 System.out.println("Received leave date: " + leaveVO.getLeaveDate()); // 打印日期檢查
+		 if (result.hasErrors()) {
+		        return "back-end/leave/addLeave";
+		    }
 
-		if (result.hasErrors()) {
-			return "back-end/leave/listAllLeave";
-		}
 		/*************************** 2.開始新增資料 *****************************************/
 		// EmpService assignSvc = new EmpService();
 		leaveSvc.addLeave(leaveVO);
@@ -119,7 +121,7 @@ public class LeaveController {
 		List<LeaveVO> list = leaveSvc.getAll();
 		model.addAttribute("leaveListData", list);
 		model.addAttribute("success", "- (刪除成功)");
-		return "back-end/leave/listAllLeave"; // 刪除完成後轉交listAllEmp.html
+		return "redirect:/leave/listAllLeaveforEmp"; // 刪除完成後轉交listAllEmp.html
 	}
 	
 	@PostMapping("updateapproval")
