@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.assign.model.AssignVO;
+import com.leave.model.LeaveVO;
+
+import hibernate.util.CompositeQuery.HibernateUtil_CompositeQuery_Emp3;
 @Service("empService")
 public class EmpService {
 
@@ -95,9 +98,8 @@ public class EmpService {
 		return empVO;
 	}
 
-//	public List<EmpVO> getAll(Map<String, String[]> map) {
-//		return HibernateUtil_CompositeQuery_Emp3.getAllC(map,sessionFactory.openSession());
-//	}
+
+
 }
 	
 

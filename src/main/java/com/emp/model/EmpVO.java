@@ -11,15 +11,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.assign.model.AssignVO;
-import com.leave.model.LeaveVO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
 @Entity
@@ -70,6 +67,7 @@ public class EmpVO implements java.io.Serializable{
 	private Byte empStatus;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="empVO")
+	@JsonBackReference
 	private Set<AssignVO> assigns = new HashSet<AssignVO>();
 //	
 //	@OneToMany(mappedBy="leaveEmpId")

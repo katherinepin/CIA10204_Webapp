@@ -1,141 +1,228 @@
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>排班資料新增 - addEmp.html</title>
+    <meta charset="UTF-8">
+    <title>每月排班編輯</title>
+    <link rel="stylesheet" href="/css/assign.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <style>
 
-<head th:insert="~{/back-end/assign/included-fragment}"></head>
-<style type="text/css">
-	
-	button {
-		padding: 5px;
-	}
-	form {
-		display: table;
-	}
-	form div {
-		display: table-row;
-	}
-	label, input, span, select {
-		display: table-cell;
-		margin: 5px;
-		text-align: left;		
-	}
-	input[type=text], input[type=password], select, textarea {
-		width: 200px;
-		margin: 5px;
-	}
-	form div div {
-		display: table-cell;
-	}
-	.center {
-        margin-left: auto;
-        margin-right: auto;
-    }
-</style>
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h1>MorningCode 員工排班</h1>
+        
+        <div class="month-selector">
+            <select id="yearSelect"></select>
+            <select id="monthSelect"></select>
+        </div>
+        <form id="assignForm" method="post">
+            <div id="calendar"></div>
+        </form>
 
-<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
-		 <div align="center"> <h2>員工資料新增 - addAssign.html</h2>
-		 <h3><a class="navbar-brand" th:href="@{/assign/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁</a></h3></div>
-</nav>
-
-	<div align="center">
-		<h3><b>所有欄位皆為必填欄位</b></h3>
-		<form th:action="@{insert}" method="post" th:object="${assignVO}" enctype="multipart/form-data">
-				
-			
-<!-- 	
-			<div>
-			<label>排班日期:</label>
-			<input type="date" th:field="*{assignDate}" onclick="hideContent('assignDate.errors');" /><br/>
-			</div>
- -->			
-		<div>
-        <label for="assignDate">排班日期:</label>
-        <input type="date" th:field="*{assignDate}" onclick="hideContent('assignDate.errors');" />
-    	</div>
+        <button type="button" id="editButton" class="btn edit" style="margin: 10px 10px;">編輯排班</button>
+        <button id="saveButton" class="btn save" style="margin-top: 10px;">送出排班</button>
 		
-			<div>
-			<label>選擇員工姓名:</label>
-				<select th:field="*{empVO.empId}">
-				     <option th:each="empVO : ${empListData}" th:value="${empVO.empId}" th:text="${empVO.empName}" />
-			    </select>
-			</div>
+    </div>
 
-			
-			<div>
-				<div></div>
-				<div><button type="submit" id="submit"> 送出新增 </button></div>
-				<div></div>
-			</div>		
-		</form>
-	
-	</div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let employeeData;
 
+            fetch('/assign/api/employees')
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Received employee data:", data);
+                    employeeData = data; // 將員工數據保存在全質變量中
+                    initializeYearAndMonthSelectors();
+                    fetchMonthlyAssignments(new Date().getFullYear(), new Date().getMonth() + 1);
+                })
+                .catch(error => console.error('Error loading the employees:', error));
 
-<!-- JavaScript part -->
-<script type="text/javascript">
-//清除提示信息
-function hideContent(d) {
-     document.getElementById(d).style.display = "none";
-}
+            function initializeYearAndMonthSelectors() {
+                const yearSelect = document.getElementById('yearSelect');
+                const monthSelect = document.getElementById('monthSelect');
+                
+                const currentYear = new Date().getFullYear();
+                for (let year = currentYear - 10; year <= currentYear; year++) {
+                    const option = document.createElement('option');
+                    option.value = year;
+                    option.textContent = year + '年';
+                    yearSelect.appendChild(option);
+                }
+                yearSelect.value = currentYear;
 
-//照片上傳-預覽用
-var filereader_support = typeof FileReader != 'undefined';
-if (!filereader_support) {
-	alert("No FileReader support");
-}
-acceptedTypes = {
-		'image/png' : true,
-		'image/jpeg' : true,
-		'image/gif' : true
-};
-function previewImage() {
-	var upfile1 = document.getElementById("upFiles");
-	upfile1.addEventListener("change", function(event) {
-		var files = event.target.files || event.dataTransfer.files;
-		for (var i = 0; i < files.length; i++) {
-			previewfile(files[i])
-		}
-	}, false);
-}
-function previewfile(file) {
-	if (filereader_support === true && acceptedTypes[file.type] === true) {
-		var reader = new FileReader();
-		reader.onload = function(event) {
-			var image = new Image();
-			image.src = event.target.result;
-			image.width = 100;
-			image.height = 75;
-			image.border = 2;
-			if (blob_holder.hasChildNodes()) {
-				blob_holder.removeChild(blob_holder.childNodes[0]);
-			}
-			blob_holder.appendChild(image);
-		};
-		reader.readAsDataURL(file);
-		document.getElementById('submit').disabled = false;
-	} else {
-		blob_holder.innerHTML = "<div  style='text-align: left;'>" + "● filename: " + file.name
-				+ "<br>" + "● ContentTyp: " + file.type
-				+ "<br>" + "● size: " + file.size + "bytes"
-				+ "<br>" + "● 上傳ContentType限制: <b> <font color=red>image/png、image/jpeg、image/gif </font></b></div>";
-		document.getElementById('submit').disabled = true;
-	}
-}
-</script>
+                for (let month = 1; month <= 12; month++) {
+                    const option = document.createElement('option');
+                    option.value = month;
+                    option.textContent = month + '月';
+                    monthSelect.appendChild(option);
+                }
+                monthSelect.value = new Date().getMonth() + 2;
+
+                yearSelect.addEventListener('change', updateCalendar);
+                monthSelect.addEventListener('change', updateCalendar);
+            }
+
+            function fetchMonthlyAssignments(year, month) {
+                console.log(`Fetching assignments for ${year}-${month}`);
+                fetch(`/assign/api/getMonthlyAssign?year=${year}&month=${month}`)
+                    .then(response => response.text()) // 先解析成文本
+                    .then(text => {
+                        try {
+                            const assignments = JSON.parse(text); // 嘗試解析成JSON
+                            console.log("Received assignment data:", assignments);
+                            initializeCalendar(employeeData, assignments);
+                            // 如果有資料, 禁用保存按鈕
+                            const saveButton = document.getElementById('saveButton');
+                            const editButton = document.getElementById('editButton');
+                            if (assignments.length > 0) {
+                                saveButton.disabled = true;
+                                saveButton.style.backgroundColor = 'gray';
+                                saveButton.style.cursor = 'not-allowed';
+                                editButton.disabled = false;
+                                document.getElementById('assignForm').setAttribute('action', '/assign/update');
+                            } else {
+                                saveButton.disabled = false;
+                                saveButton.style.backgroundColor = '';
+                                saveButton.style.cursor = '';
+                                editButton.disabled = true;
+                                document.getElementById('assignForm').setAttribute('action', '/assign/insert');
+                            }
+                        } catch (e) {
+                            console.error('Error parsing JSON:', e);
+                            console.error('Response text:', text); 
+                            initializeCalendar(employeeData, []); // 如果解析失敗，顯是空的日曆
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error loading the assignments:', error);
+                        initializeCalendar(employeeData, []); // 如果出錯，顯示空的日曆
+                    });
+            }
+
+            function initializeCalendar(employeeData, assignments) {
+                console.log("Initializing calendar with employee data and assignments", employeeData, assignments);
+
+                if (!employeeData || !employeeData.employees) {
+                    console.error('Employee data is undefined or missing employees property');
+                    return;
+                }
+
+                const calendar = document.getElementById('calendar');
+                calendar.innerHTML = ''; // 清空現有日曆
+
+                const yearSelect = document.getElementById('yearSelect');
+                const monthSelect = document.getElementById('monthSelect');
+
+                const year = parseInt(yearSelect.value);
+                const month = parseInt(monthSelect.value);
+
+                const daysInMonth = new Date(year, month, 0).getDate();
+                const firstDay = new Date(year, month - 1, 1).getDay();
+                const dayNames = ['日', '一', '二', '三', '四', '五', '六'];
+
+                // 新增星期幾的標題
+                dayNames.forEach(day => {
+                    const dayHeader = document.createElement('div');
+                    dayHeader.className = 'day day-header';
+                    dayHeader.textContent = day;
+                    calendar.appendChild(dayHeader);
+                });
+
+                // 新增空白日期
+                for (let i = 0; i < firstDay; i++) {
+                    const emptyDay = document.createElement('div');
+                    emptyDay.className = 'day empty';
+                    calendar.appendChild(emptyDay);
+                }
+
+                // 新增每一天的格子
+                for (let i = 1; i <= daysInMonth; i++) {
+                    const dateStr = `${year}-${month.toString().padStart(2, '0')}-${i.toString().padStart(2, '0')}`;
+                    const assignment = assignments.find(a => a.assignDate === dateStr);
+                    const selectedEmpId = assignment ? assignment.empVO.empId : '';
+                    const dayCell = document.createElement('div');
+                    dayCell.className = 'day';
+                    dayCell.innerHTML = `
+                    <div class="day-label">${i}</div>
+                    <br>
+                    <select name="employees[]" required ${assignments.length === 0 ? '' : 'disabled'}>
+                        <option value="">選擇員工</option>
+                        ${employeeData.employees.map(emp => `<option value="${emp.empId}" ${emp.empId === selectedEmpId ? 'selected' : ''}>${emp.empName}</option>`).join('')}
+                    </select>
+                    <input type="hidden" name="dates[]" value="${dateStr}">
+                    `;
+                    calendar.appendChild(dayCell);
+                }
+            }
+
+            function updateCalendar() {
+                const yearSelect = document.getElementById('yearSelect');
+                const monthSelect = document.getElementById('monthSelect');
+                const selectedYear = parseInt(yearSelect.value);
+                const selectedMonth = parseInt(monthSelect.value);
+                fetchMonthlyAssignments(selectedYear, selectedMonth);
+            }
+
+            // 表單送出
+            document.getElementById('saveButton').addEventListener('click', function(e) {
+                e.preventDefault();
+                const form = document.getElementById('assignForm');
+                const selects = form.querySelectorAll('select[name="employees[]"]');
+                let allSelected = true;
+                selects.forEach(select => {
+                    if (!select.value) {
+                        allSelected = false;
+                    }
+                });
+                if (!allSelected) {
+                    alert('所有日期必須選擇員工');
+                    return;
+                }
+                const formData = new FormData(form);
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        alert(data.message);
+                    }
+                    if (data.error) {
+                        alert(data.error);
+                    }
+                    // 禁用提交按钮
+                    const saveButton = document.getElementById('saveButton');
+                    saveButton.disabled = true;
+                    saveButton.style.backgroundColor = 'gray';
+                    saveButton.style.cursor = 'not-allowed';
+                    const editButton = document.getElementById('editButton');
+                    editButton.disabled = false;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('保存失敗，請重試');
+                });
+            });
+
+            // 編輯排班
+            document.getElementById('editButton').addEventListener('click', function() {
+                const selects = document.querySelectorAll('#calendar select');
+                selects.forEach(select => {
+                    select.disabled = false;
+                });
+                const saveButton = document.getElementById('saveButton');
+                saveButton.disabled = false;
+                saveButton.style.backgroundColor = '';
+                saveButton.style.cursor = '';
+                document.getElementById('assignForm').setAttribute('action', '/assign/update');
+            });
+        });
+    </script>
 
 </body>
 </html>

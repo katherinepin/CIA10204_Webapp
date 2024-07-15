@@ -1,15 +1,12 @@
 package com.assign.model;
 
+import java.sql.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import hibernate.util.CompositeQuery.HibernateUtil_CompositeQuery_Emp3;
 
 
 
@@ -47,9 +44,16 @@ public class AssignService {
 	}
 
 
+    public List<AssignVO> getMonthlyAssigns(int year, int month) {
+        return repository.findByMonthAndYear(year, month);
+    }
+
+    public List<AssignVO> getAssignByDate(Date assignDate) {
+        return repository.findByAssignDate(assignDate);
+    }
+}
 
 //	public List<AssignVO> getAll(Map<String, String[]> map) {
 //		return HibernateUtil_CompositeQuery_Emp3.getAllC(map,sessionFactory.openSession());
 //	}
 
-}

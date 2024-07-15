@@ -7,9 +7,7 @@ import java.util.Optional;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.emp.model.EmpRepository;
-import com.emp.model.EmpVO;
+import org.springframework.transaction.annotation.Transactional;
 
 import hibernate.util.CompositeQuery.HibernateUtil_CompositeQuery_Emp3;
 
@@ -54,4 +52,5 @@ public class LeaveService {
 		return HibernateUtil_CompositeQuery_Emp3.getAllC(map,sessionFactory.openSession());
 	}
 	
+
 }

@@ -67,6 +67,7 @@ public class IndexController_inSpringBoot {
 		return "back-end/assign/listAllAssign";
 	}
     
+    
     @ModelAttribute("assignListData")  // for select_page.html 第97 109行用 // for listAllEmp.html 第85行用
 	protected List<AssignVO> referenceListData(Model model) {
 		
@@ -110,5 +111,7 @@ public class IndexController_inSpringBoot {
 		List<EmpVO> list = empSvc.getAll();
 		return list;
 	}
+	
+	
 
 }

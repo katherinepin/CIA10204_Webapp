@@ -109,11 +109,22 @@ public class LeaveVO {
 		this.leaveAssigneeId = leaveAssigneeId;
 	}
 	
-	 public void approveLeave() {
+
+	public void approveLeave() {
 	        this.leaveApprovaldate = new Timestamp(System.currentTimeMillis());
 	        this.leaveStatus = 1; // Assuming 1 means approved
-	    }
 
+	        
+	        
+	    }
+	public void rejectLeave() {
+        this.leaveApprovaldate = new Timestamp(System.currentTimeMillis());
+        this.leaveStatus = 2; // Assuming 1 means approved
+
+        
+        
+    }
+	
 
 	
 }
